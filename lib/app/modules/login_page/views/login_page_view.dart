@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gvinum_travel/all_material.dart';
+import 'package:gvinum_travel/app/modules/home/views/home_view.dart';
 
 import '../controllers/login_page_controller.dart';
 
@@ -157,10 +158,11 @@ class LoginPageView extends GetView<LoginPageController> {
                       AllMaterial.cusButton(
                         label: "Login",
                         onTap: () {
-                          AllMaterial.messageScaffold(
-                            title:
-                                "Permintaan tidak valid. Periksa input Anda!",
-                          );
+                          Get.to(() => const HomeView());
+                          // AllMaterial.messageScaffold(
+                          //   title:
+                          //       "Permintaan tidak valid. Periksa input Anda!",
+                          // );
                         },
                       ),
                       const SizedBox(height: 16),

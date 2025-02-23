@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:gvinum_travel/all_material.dart';
+import 'package:gvinum_travel/app/modules/chat_room/views/chat_room_view.dart';
+import 'package:gvinum_travel/app/modules/jadwal_manasik/views/jadwal_manasik_view.dart';
+import 'package:gvinum_travel/app/modules/list_rombongan/views/list_rombongan_view.dart';
+import 'package:gvinum_travel/app/modules/login_page/views/login_page_view.dart';
+import 'package:gvinum_travel/app/modules/notifikasi/views/notifikasi_view.dart';
+import 'package:gvinum_travel/app/modules/pengaturan/views/pengaturan_view.dart';
+import 'package:gvinum_travel/app/modules/perjalanan_saya/views/perjalanan_saya_view.dart';
+import 'package:gvinum_travel/app/modules/pilih_paket/views/pilih_paket_view.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -28,7 +36,9 @@ class HomeView extends GetView<HomeController> {
             icon: SvgPicture.asset(
               'assets/icon/notification.svg',
             ),
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => const NotifikasiView());
+            },
           ),
         ],
         leading: Builder(
@@ -43,17 +53,216 @@ class HomeView extends GetView<HomeController> {
         ),
       ),
       drawer: Drawer(
+        backgroundColor: AllMaterial.colorWhite,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0),
+        ),
+        surfaceTintColor: AllMaterial.colorWhite,
         child: ListView(
-          padding: EdgeInsets.zero,
-          children: const [
-            DrawerHeader(
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.zero,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Icon(Icons.check),
-            )
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: context.mediaQueryPadding.top + 15,
+          ),
+          children: [
+            Row(
+              children: [
+                const CircleAvatar(
+                  radius: 30,
+                ),
+                const SizedBox(width: 15),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Habil Arlian Asrori",
+                          style: AllMaterial.inter(
+                            fontWeight: AllMaterial.fontSemiBold,
+                            color: AllMaterial.colorBlack,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        GestureDetector(
+                          onTap: () {},
+                          child: const Icon(
+                            Icons.edit,
+                            size: 18,
+                            color: AllMaterial.colorSoftPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      "aabiljr@gmail.com",
+                      style: AllMaterial.inter(
+                        fontWeight: AllMaterial.fontMedium,
+                        color: AllMaterial.colorGreyPrim,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+            AllMaterial.drawerItem(
+              warnaBackground: AllMaterial.colorPrimary,
+              warnaText: AllMaterial.colorWhite,
+              warnaSvg: AllMaterial.colorWhite,
+              svg: "assets/icon/perjalanan.svg",
+              onTap: () {
+                Get.back();
+                Get.to(() => const PerjalananSayaView());
+              },
+              title: "Perjalanan Saya",
+            ),
+            const SizedBox(height: 10),
+            AllMaterial.drawerItem(
+              svg: "assets/icon/paket.svg",
+              onTap: () {
+                Get.back();
+                Get.to(() => const PilihPaketView());
+              },
+              title: "Pilih Paket",
+            ),
+            const SizedBox(height: 10),
+            AllMaterial.drawerItem(
+              svg: "assets/icon/rombongan.svg",
+              onTap: () {
+                Get.back();
+                Get.to(() => const ListRombonganView());
+              },
+              title: "List Rombongan",
+            ),
+            const SizedBox(height: 10),
+            AllMaterial.drawerItem(
+              svg: "assets/icon/manasik.svg",
+              onTap: () {
+                Get.back();
+                Get.to(() => const JadwalManasikView());
+              },
+              title: "Jadwal Manasik",
+            ),
+            const SizedBox(height: 10),
+            AllMaterial.drawerItem(
+              svg: "assets/icon/pengaturan.svg",
+              onTap: () {
+                Get.back();
+                Get.to(() => const PengaturanView());
+              },
+              title: "Pengaturan",
+            ),
+            const SizedBox(height: 10),
+            AllMaterial.drawerItem(
+              svg: "assets/icon/logout.svg",
+              warnaSvg: AllMaterial.colorSoftPrimary,
+              warnaText: AllMaterial.colorSoftPrimary,
+              onTap: () {
+                Get.back();
+                Get.to(() => const LoginPageView());
+              },
+              title: "Logout",
+            ),
+            const SizedBox(height: 10),
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Divider(color: AllMaterial.colorGreySec),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.info_outline,
+                      color: AllMaterial.colorGreyPrim,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      "Hubungi Admin",
+                      style:
+                          AllMaterial.inter(color: AllMaterial.colorGreyPrim),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  // mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Get.back();
+                        Get.to(() => const ChatRoomView());
+                      },
+                      label: Text(
+                        "Chat",
+                        style: AllMaterial.inter(
+                          color: AllMaterial.colorBlack,
+                          fontSize: 16,
+                          fontWeight: AllMaterial.fontSemiBold,
+                        ),
+                      ),
+                      icon: SvgPicture.asset(
+                        "assets/icon/chat.svg",
+                        // ignore: deprecated_member_use
+                        color: AllMaterial.colorBlack,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AllMaterial.colorWhite,
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            width: 1,
+                            color: AllMaterial.colorStroke,
+                          ),
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ),
+                        ),
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 14,
+                          horizontal: 15,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () {},
+                      label: Text(
+                        "Message",
+                        style: AllMaterial.inter(
+                          color: AllMaterial.colorWhite,
+                          fontSize: 16,
+                          fontWeight: AllMaterial.fontSemiBold,
+                        ),
+                      ),
+                      icon: SvgPicture.asset(
+                        "assets/icon/whatsapp.svg",
+                        width: 18,
+                        height: 18,
+                        // ignore: deprecated_member_use
+                        color: AllMaterial.colorWhite,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AllMaterial.colorPrimary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ),
+                        ),
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 14,
+                          horizontal: 15,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -242,7 +451,9 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => const PengaturanView());
+                            },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -279,94 +490,103 @@ class HomeView extends GetView<HomeController> {
                   ),
                   const SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 160,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: AllMaterial.colorStroke,
-                            ),
+                    padding: const EdgeInsets.only(left: 10),
+                    child: InkWell(
+                      onTap: () {
+                        Get.to(() => const PilihPaketView());
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AllMaterial.titleMenu(title: "Paket Haji & Umroh"),
+                          IconButton(
+                            onPressed: () {
+                              Get.to(() => const PilihPaketView());
+                            },
+                            icon: const Icon(Icons.arrow_forward),
                           ),
-                          child: Column(
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Row(
+                        children: [
+                          AllMaterial.productItem(
+                            hargaPaket: "21.000.000",
+                            img: "assets/images/login.jpg",
+                            jenisPaket: "Umrah",
+                            namaPaket: "Umrah Winter Regular",
+                            onTap: () {},
+                            rating: "4.1",
+                          ),
+                          AllMaterial.productItem(
+                            hargaPaket: "21.000.000",
+                            img: "assets/images/login.jpg",
+                            jenisPaket: "Umrah",
+                            namaPaket: "Umrah Winter Regular",
+                            onTap: () {},
+                            rating: "4.4",
+                          ),
+                          AllMaterial.productItem(
+                            hargaPaket: "21.000.000",
+                            img: "assets/images/login.jpg",
+                            jenisPaket: "Umrah",
+                            namaPaket: "Umrah Winter Regular",
+                            onTap: () {},
+                            rating: "4.5",
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AllMaterial.titleMenu(title: "Hubungi Admin"),
+                        const SizedBox(height: 20),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                height: 140,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(9),
-                                  image: const DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image:
-                                        AssetImage("assets/images/login.jpg"),
-                                  ),
-                                ),
-                                child: Container(
-                                  alignment: Alignment.topRight,
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 3,
-                                    horizontal: 5,
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Icon(
-                                        Icons.star,
-                                        color: AllMaterial.colorWhite,
-                                      ),
-                                      Text(
-                                        "4.2",
-                                        style: AllMaterial.inter(
-                                          color: AllMaterial.colorWhite,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                              AllMaterial.autoChatItem(
+                                svg: "assets/icon/terpercaya.svg",
+                                context: "terpercaya?",
+                                onTap: () {},
                               ),
-                              Container(
-                                padding: const EdgeInsets.only(
-                                  top: 9,
-                                  left: 9,
-                                  bottom: 25,
-                                  right: 9,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Umrah Winter Regular",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: AllMaterial.inter(
-                                        fontWeight: AllMaterial.fontSemiBold,
-                                        color: AllMaterial.colorBlack,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Paket Umrah",
-                                      style: AllMaterial.inter(
-                                        color: AllMaterial.colorGreyPrim,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Rp. 21.000.000",
-                                      style: AllMaterial.inter(
-                                        fontSize: 16,
-                                        color: AllMaterial.colorPrimary,
-                                        fontWeight: AllMaterial.fontSemiBold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              const SizedBox(width: 10),
+                              AllMaterial.autoChatItem(
+                                svg: "assets/icon/cepat.svg",
+                                context: "cepat?",
+                                onTap: () {},
+                              ),
+                              const SizedBox(width: 10),
+                              AllMaterial.autoChatItem(
+                                svg: "assets/icon/sigap.svg",
+                                context: "sigap?",
+                                onTap: () {},
+                              ),
+                              const SizedBox(width: 10),
+                              AllMaterial.autoChatItem(
+                                svg: "assets/icon/update.svg",
+                                context: "ter-update?",
+                                onTap: () {},
                               ),
                             ],
                           ),
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
@@ -377,7 +597,9 @@ class HomeView extends GetView<HomeController> {
         tooltip: "Hubungi Admin",
         elevation: 1,
         backgroundColor: AllMaterial.colorPrimary,
-        onPressed: () {},
+        onPressed: () {
+          Get.to(() => const ChatRoomView());
+        },
         child: SvgPicture.asset(
           "assets/icon/chat.svg",
           fit: BoxFit.cover,

@@ -487,6 +487,246 @@ abstract class AllMaterial {
     );
   }
 
+  // Product Item
+  static productItem({
+    String? img,
+    String? rating,
+    String? namaPaket,
+    String? jenisPaket,
+    String? hargaPaket,
+    void Function()? onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        width: 160,
+        margin: const EdgeInsets.only(right: 5),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: AllMaterial.colorStroke,
+          ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 140,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(9),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage("$img"),
+                ),
+              ),
+              child: Container(
+                alignment: Alignment.topRight,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 3,
+                  horizontal: 5,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.star,
+                      color: AllMaterial.colorWhite,
+                    ),
+                    Text(
+                      "$rating",
+                      style: AllMaterial.inter(
+                        color: AllMaterial.colorWhite,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(
+                top: 9,
+                left: 9,
+                bottom: 25,
+                right: 9,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "$namaPaket",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AllMaterial.inter(
+                      fontWeight: AllMaterial.fontSemiBold,
+                      color: AllMaterial.colorBlack,
+                    ),
+                  ),
+                  Text(
+                    "Paket $jenisPaket",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AllMaterial.inter(
+                      color: AllMaterial.colorGreyPrim,
+                    ),
+                  ),
+                  Text(
+                    "Rp. $hargaPaket",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AllMaterial.inter(
+                      fontSize: 16,
+                      color: AllMaterial.colorPrimary,
+                      fontWeight: AllMaterial.fontSemiBold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Title Menu
+  static titleMenu({String? title, double fontSize = 18, double width = 3, double height = 20}) {
+    return Row(
+      children: [
+        Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: AllMaterial.colorPrimary,
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          "$title",
+          style: AllMaterial.inter(
+            color: AllMaterial.colorBlack,
+            fontWeight: AllMaterial.fontBold,
+            fontSize: fontSize,
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Drawer Item
+  static drawerItem({
+    Color warnaBackground = colorWhite,
+    Color warnaText = colorGreyPrim,
+    Color warnaSvg = colorGreyPrim,
+    String? svg,
+    String? title,
+    void Function()? onTap,
+  }) {
+    return Material(
+      borderRadius: BorderRadius.circular(8),
+      color: warnaBackground,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                // ignore: deprecated_member_use
+                color: warnaSvg,
+                height: 24,
+                "$svg",
+              ),
+              const SizedBox(width: 10),
+              Text(
+                "$title",
+                style: AllMaterial.inter(
+                  color:warnaText,
+                  fontSize: 15,
+                  fontWeight: AllMaterial.fontSemiBold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Pintasan Cepat
+  static autoChatItem({
+    String? context,
+    String? svg,
+    void Function()? onTap,
+  }) {
+    return Material(
+      color: AllMaterial.colorWhite,
+      borderRadius: BorderRadius.circular(17),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(17),
+        onTap: onTap,
+        child: Container(
+          alignment: Alignment.bottomRight,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(17),
+            border: Border.all(
+              color: AllMaterial.colorStroke,
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                          text: "Apakah\n",
+                          style: AllMaterial.inter(
+                            color: AllMaterial.colorBlack,
+                          ),
+                          children: [
+                            TextSpan(
+                                text: "Gvinum Travel\n",
+                                style: AllMaterial.inter(
+                                  color: AllMaterial.colorBlack,
+                                  fontWeight: AllMaterial.fontBold,
+                                )),
+                            TextSpan(
+                              text: "$context",
+                              style: AllMaterial.inter(
+                                color: AllMaterial.colorBlack,
+                              ),
+                            ),
+                          ]),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_forward,
+                        color: AllMaterial.colorBlack,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 15),
+              SvgPicture.asset(
+                "$svg",
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   // Dropdown Item
   static dropDownWidget({
     FocusNode? focusNode,
