@@ -12,6 +12,7 @@ abstract class Routes {
   static const PILIH_PAKET = _Paths.PILIH_PAKET;
   static const CHAT_ROOM = _Paths.CHAT_ROOM;
   static const PENGATURAN = _Paths.PENGATURAN;
+  static const FOCUS_PRODUK = _Paths.FOCUS_PRODUK;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const PILIH_PAKET = '/pilih-paket';
   static const CHAT_ROOM = '/chat-room';
   static const PENGATURAN = '/pengaturan';
+  static const FOCUS_PRODUK = '/focus-produk';
 }

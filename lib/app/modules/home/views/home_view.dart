@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:gvinum_travel/all_material.dart';
+import 'package:gvinum_travel/app/modules/chat_room/controllers/chat_room_controller.dart';
 import 'package:gvinum_travel/app/modules/chat_room/views/chat_room_view.dart';
+import 'package:gvinum_travel/app/modules/focus_produk/views/focus_produk_view.dart';
 import 'package:gvinum_travel/app/modules/jadwal_manasik/views/jadwal_manasik_view.dart';
 import 'package:gvinum_travel/app/modules/list_rombongan/views/list_rombongan_view.dart';
 import 'package:gvinum_travel/app/modules/login_page/views/login_page_view.dart';
@@ -17,6 +19,7 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
+    final chatCont = Get.put(ChatRoomController());
     return Scaffold(
       backgroundColor: AllMaterial.colorWhite,
       appBar: AppBar(
@@ -87,7 +90,12 @@ class HomeView extends GetView<HomeController> {
                         ),
                         const SizedBox(width: 5),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Get.back();
+                            AllMaterial.messageScaffold(
+                              title: "Fitur sedang digarap, coba lagi nanti!",
+                            );
+                          },
                           child: const Icon(
                             Icons.edit,
                             size: 18,
@@ -229,7 +237,15 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
                     ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        AllMaterial.openWhatsApp(
+                            phone: "6285728565172",
+                            message:
+                                "Assalamu’alaikum warahmatullahi wabarakatuh,\n\n"
+                                "Saya ingin bertanya mengenai paket haji/umroh yang tersedia. Bisa dibantu dengan informasi terkait jadwal keberangkatan, fasilitas, serta biaya yang ditawarkan?\n\n"
+                                "Terima kasih.\n\n"
+                                "Wassalamu’alaikum warahmatullahi wabarakatuh.");
+                      },
                       label: Text(
                         "Message",
                         style: AllMaterial.inter(
@@ -294,6 +310,10 @@ class HomeView extends GetView<HomeController> {
                   Padding(
                     padding: const EdgeInsets.only(right: 15),
                     child: TextField(
+                      onTap: () {
+                        print("object");
+                        Get.to(() => const PilihPaketView());
+                      },
                       selectionControls: MaterialTextSelectionControls(),
                       // controller: loginController.userC,
                       // focusNode: loginController.userF,
@@ -305,6 +325,7 @@ class HomeView extends GetView<HomeController> {
                       style: AllMaterial.inter(
                         color: AllMaterial.colorGreyPrim,
                       ),
+                      readOnly: true,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 10,
@@ -348,7 +369,10 @@ class HomeView extends GetView<HomeController> {
                               ),
                               backgroundColor: AllMaterial.colorPrimary,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              print("object");
+                              Get.to(() => const PilihPaketView());
+                            },
                             icon: const Icon(
                               Icons.search,
                               color: AllMaterial.colorWhite,
@@ -367,7 +391,9 @@ class HomeView extends GetView<HomeController> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => const PilihPaketView());
+                            },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -395,7 +421,9 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => const ListRombonganView());
+                            },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -423,7 +451,9 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => const JadwalManasikView());
+                            },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -521,7 +551,9 @@ class HomeView extends GetView<HomeController> {
                             img: "assets/images/login.jpg",
                             jenisPaket: "Umrah",
                             namaPaket: "Umrah Winter Regular",
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => const FocusProdukView());
+                            },
                             rating: "4.1",
                           ),
                           AllMaterial.productItem(
@@ -529,7 +561,9 @@ class HomeView extends GetView<HomeController> {
                             img: "assets/images/login.jpg",
                             jenisPaket: "Umrah",
                             namaPaket: "Umrah Winter Regular",
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => const FocusProdukView());
+                            },
                             rating: "4.4",
                           ),
                           AllMaterial.productItem(
@@ -537,7 +571,9 @@ class HomeView extends GetView<HomeController> {
                             img: "assets/images/login.jpg",
                             jenisPaket: "Umrah",
                             namaPaket: "Umrah Winter Regular",
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => const FocusProdukView());
+                            },
                             rating: "4.5",
                           ),
                         ],
@@ -558,27 +594,50 @@ class HomeView extends GetView<HomeController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AllMaterial.autoChatItem(
-                                svg: "assets/icon/terpercaya.svg",
-                                context: "terpercaya?",
-                                onTap: () {},
-                              ),
+                                  svg: "assets/icon/terpercaya.svg",
+                                  context: "terpercaya?",
+                                  onTap: () async {
+                                    await Future.delayed(
+                                        const Duration(milliseconds: 500));
+                                    Get.to(() => const ChatRoomView());
+                                    chatCont.sendAutoChat(
+                                        "Apakah Gvinum Travel terpercaya?");
+                                  }),
                               const SizedBox(width: 10),
                               AllMaterial.autoChatItem(
                                 svg: "assets/icon/cepat.svg",
                                 context: "cepat?",
-                                onTap: () {},
+                                onTap: () async {
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 500));
+                                  Get.to(() => const ChatRoomView());
+                                  chatCont.sendAutoChat(
+                                      "Apakah Gvinum Travel cepat?");
+                                },
                               ),
                               const SizedBox(width: 10),
                               AllMaterial.autoChatItem(
                                 svg: "assets/icon/sigap.svg",
                                 context: "sigap?",
-                                onTap: () {},
+                                onTap: () async {
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 500));
+                                  Get.to(() => const ChatRoomView());
+                                  chatCont.sendAutoChat(
+                                      "Apakah Gvinum Travel sigap?");
+                                },
                               ),
                               const SizedBox(width: 10),
                               AllMaterial.autoChatItem(
                                 svg: "assets/icon/update.svg",
                                 context: "ter-update?",
-                                onTap: () {},
+                                onTap: () async {
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 500));
+                                  Get.to(() => const ChatRoomView());
+                                  chatCont.sendAutoChat(
+                                      "Apakah Gvinum Travel ter-update?");
+                                },
                               ),
                             ],
                           ),

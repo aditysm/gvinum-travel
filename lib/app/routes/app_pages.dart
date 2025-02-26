@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/chat_room/bindings/chat_room_binding.dart';
 import '../modules/chat_room/views/chat_room_view.dart';
+import '../modules/focus_produk/bindings/focus_produk_binding.dart';
+import '../modules/focus_produk/views/focus_produk_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/jadwal_manasik/bindings/jadwal_manasik_binding.dart';
@@ -73,6 +75,11 @@ class AppPages {
       name: _Paths.PENGATURAN,
       page: () => const PengaturanView(),
       binding: PengaturanBinding(),
+    ),
+    GetPage(
+      name: _Paths.FOCUS_PRODUK,
+      page: () => const FocusProdukView(),
+      binding: FocusProdukBinding(),
     ),
   ];
 }

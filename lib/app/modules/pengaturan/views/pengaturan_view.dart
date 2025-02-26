@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
+import 'package:gvinum_travel/all_material.dart';
+import 'package:gvinum_travel/app/modules/chat_room/views/chat_room_view.dart';
+import 'package:gvinum_travel/app/modules/jadwal_manasik/views/jadwal_manasik_view.dart';
+import 'package:gvinum_travel/app/modules/list_rombongan/views/list_rombongan_view.dart';
+import 'package:gvinum_travel/app/modules/login_page/views/login_page_view.dart';
+import 'package:gvinum_travel/app/modules/perjalanan_saya/views/perjalanan_saya_view.dart';
 
 import '../controllers/pengaturan_controller.dart';
 
@@ -9,14 +14,97 @@ class PengaturanView extends GetView<PengaturanController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AllMaterial.colorWhite,
       appBar: AppBar(
-        title: const Text('PengaturanView'),
+        backgroundColor: AllMaterial.colorWhite,
+        surfaceTintColor: AllMaterial.colorWhite,
+        title: Text(
+          'Pengaturan & Lainnya',
+          style: AllMaterial.inter(
+            color: AllMaterial.colorBlack,
+            fontWeight: AllMaterial.fontBold,
+            fontSize: 17,
+          ),
+        ),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'PengaturanView is working',
-          style: TextStyle(fontSize: 20),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 22,
+            vertical: 16,
+          ),
+          child: ListView(
+            children: [
+              AllMaterial.settingWidget(
+                title: "Edit Profil",
+                onTap: () {
+                  AllMaterial.messageScaffold(title: "Fitur sedang digarap, coba lagi nanti!");
+                  // Get.to(() => const PerjalananSayaView());
+                },
+                svg: "assets/icon/edit.svg",
+              ),
+              const SizedBox(height: 16),
+              AllMaterial.settingWidget(
+                title: "Ubah Password",
+                onTap: () {
+                  AllMaterial.messageScaffold(title: "Fitur sedang digarap, coba lagi nanti!");
+                  // Get.to(() => const PerjalananSayaView());
+                },
+                svg: "assets/icon/password.svg",
+              ),
+              const SizedBox(height: 16),
+              AllMaterial.settingWidget(
+                title: "Perjalanan Saya",
+                onTap: () {
+                  Get.to(() => const PerjalananSayaView());
+                },
+                svg: "assets/icon/perjalanan.svg",
+              ),
+              const SizedBox(height: 16),
+              AllMaterial.settingWidget(
+                title: "List Rombongan",
+                onTap: () {
+                  Get.to(() => const ListRombonganView());
+                },
+                svg: "assets/icon/rombongan.svg",
+              ),
+              const SizedBox(height: 16),
+              AllMaterial.settingWidget(
+                title: "Jadwal Manasik",
+                onTap: () {
+                  Get.to(() => const JadwalManasikView());
+                },
+                svg: "assets/icon/manasik.svg",
+              ),
+              const SizedBox(height: 16),
+              AllMaterial.settingWidget(
+                title: "Verifikasi Email",
+                onTap: () {
+                  // Get.to(() => const PerjalananSayaView());
+                  AllMaterial.messageScaffold(title: "Fitur sedang digarap, coba lagi nanti!");
+                },
+                svg: "assets/icon/email.svg",
+              ),
+              const SizedBox(height: 16),
+              AllMaterial.settingWidget(
+                title: "Hubungi Admin",
+                onTap: () {
+                  Get.to(() => const ChatRoomView());
+                },
+                svg: "assets/icon/chat.svg",
+              ),
+              const SizedBox(height: 16),
+              AllMaterial.settingWidget(
+                title: "Logout",
+                onTap: () {
+                  Get.to(() => const LoginPageView());
+                },
+                svg: "assets/icon/logout.svg",
+              ),
+              const SizedBox(height: 16),
+            ],
+          ),
         ),
       ),
     );

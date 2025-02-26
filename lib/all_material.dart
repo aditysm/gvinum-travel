@@ -1,9 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 abstract class AllMaterial {
   static var box = GetStorage();
@@ -20,7 +23,6 @@ abstract class AllMaterial {
 
   // Color
   static const colorPrimary = Color(0xffFF3C3C);
-  static const colorSecondary = Color(0xffCCF9DB);
   static const colorSoftPrimary = Color(0xffE57373);
   static const colorWhite = Colors.white;
   static const colorWhitePrimary = Color(0xffFBFBFB);
@@ -55,30 +57,29 @@ abstract class AllMaterial {
   static cusButton({
     String? label,
     void Function()? onTap,
-    Widget? icon,
-    bool addIcon = true,
   }) {
-    return ElevatedButton.icon(
-      onPressed: onTap,
-      label: Text(
-        "$label",
-        style: AllMaterial.inter(
-          color: AllMaterial.colorWhite,
-          fontSize: 16,
-          fontWeight: AllMaterial.fontSemiBold,
-        ),
-      ),
-      icon: addIcon == true ? icon : null,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AllMaterial.colorPrimary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            10,
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, bottom: 10),
+      child: SizedBox(
+        width: Get.width,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AllMaterial.colorPrimary,
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          onPressed: onTap,
+          child: Text(
+            "$label",
+            style: AllMaterial.inter(
+              color: Colors.white,
+              fontWeight: AllMaterial.fontSemiBold,
+              fontSize: 16,
+            ),
           ),
         ),
-        elevation: 0,
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        fixedSize: Size(Get.width, 50),
       ),
     );
   }
@@ -191,10 +192,10 @@ abstract class AllMaterial {
                   width: 35,
                   height: 35,
                   decoration: BoxDecoration(
-                    color: AllMaterial.colorSecondary,
+                    color: AllMaterial.colorSoftPrimary,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: SvgPicture.asset("assets/svg/notif.svg"),
+                  child: SvgPicture.asset("assets/icon/notif.svg"),
                 ),
               ],
             ),
@@ -214,13 +215,8 @@ abstract class AllMaterial {
               overflow: TextOverflow.ellipsis,
               softWrap: true,
               style: AllMaterial.inter(
-                color: AllMaterial.colorGreySec,
+                color: AllMaterial.colorGreyPrim,
               ),
-            ),
-            trailing: const Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: AllMaterial.colorPrimary,
-              size: 16,
             ),
           ),
         ),
@@ -232,10 +228,10 @@ abstract class AllMaterial {
   static settingWidget({
     String? title,
     void Function()? onTap,
-    IconData? icon,
+    String? svg,
   }) {
     return Material(
-      color: const Color(0xffF9FDFA),
+      color: AllMaterial.colorWhitePrimary,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
@@ -250,9 +246,11 @@ abstract class AllMaterial {
           ),
           child: ListTile(
             contentPadding: EdgeInsets.zero,
-            leading: Icon(
-              icon,
-              color: AllMaterial.colorPrimary,
+            leading: SvgPicture.asset(
+              "$svg",
+              // height: 22,
+              width: 22,
+              color: AllMaterial.colorBlack,
             ),
             title: Text(
               "$title",
@@ -264,9 +262,8 @@ abstract class AllMaterial {
               maxLines: 1,
             ),
             trailing: const Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: AllMaterial.colorPrimary,
-              size: 16,
+              Icons.arrow_forward,
+              color: AllMaterial.colorBlack,
             ),
           ),
         ),
@@ -321,7 +318,9 @@ abstract class AllMaterial {
     Widget? konten,
     bool addSubtitle = true,
     bool customButton = false,
+    bool customDetil = false,
     Widget? customButtonWidget,
+    Widget? customDetilWidget,
     void Function()? onTap,
   }) {
     return Get.bottomSheet(
@@ -335,56 +334,69 @@ abstract class AllMaterial {
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    height: 5,
-                    width: 135,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: AllMaterial.colorGreySec,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 35),
-                Text(
-                  "$title",
-                  style: AllMaterial.inter(
-                    fontSize: 25,
-                    fontWeight: AllMaterial.fontMedium,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                addSubtitle == false
-                    ? const SizedBox.shrink()
-                    : Text(
-                        "$subtitle",
-                        style: AllMaterial.inter(
-                          fontWeight: AllMaterial.fontMedium,
-                          color: AllMaterial.colorGreySec,
+            child: customDetil
+                ? customDetilWidget
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Container(
+                          height: 5,
+                          width: 135,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: AllMaterial.colorGreySec,
+                          ),
                         ),
                       ),
-                addSubtitle == false
-                    ? const SizedBox.shrink()
-                    : const SizedBox(height: 20),
-                SizedBox(child: konten),
-                const SizedBox(height: 20),
-                customButton == false
-                    ? AllMaterial.cusButton(
-                        icon: icon,
-                        label: "$buttonLabel",
-                        onTap: onTap,
-                      )
-                    : customButtonWidget
-              ],
-            ),
+                      const SizedBox(height: 35),
+                      Text(
+                        "$title",
+                        style: AllMaterial.inter(
+                          fontSize: 25,
+                          fontWeight: AllMaterial.fontMedium,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      addSubtitle == false
+                          ? const SizedBox.shrink()
+                          : Text(
+                              "$subtitle",
+                              style: AllMaterial.inter(
+                                fontWeight: AllMaterial.fontMedium,
+                                color: AllMaterial.colorGreyPrim,
+                              ),
+                            ),
+                      addSubtitle == false
+                          ? const SizedBox.shrink()
+                          : const SizedBox(height: 20),
+                      SizedBox(child: konten),
+                      const SizedBox(height: 20),
+                      customButton == false
+                          ? AllMaterial.cusButton(
+                              label: "$buttonLabel",
+                              onTap: onTap,
+                            )
+                          : customButtonWidget
+                    ],
+                  ),
           ),
         ],
       ),
     );
+  }
+
+  // To WhatsApp
+  static void openWhatsApp({required String phone, String? message}) async {
+    String url =
+        "https://wa.me/$phone?text=${Uri.encodeComponent(message ?? '')}";
+
+    if (await canLaunch(url)) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      messageScaffold(title: "Tidak dapat mengakses WhatsApp");
+    }
   }
 
   // Profile Widget
@@ -524,18 +536,29 @@ abstract class AllMaterial {
                   vertical: 3,
                   horizontal: 5,
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
+                child: Stack(
+                  alignment: AlignmentDirectional.topEnd,
                   children: [
-                    const Icon(
-                      Icons.star,
-                      color: AllMaterial.colorWhite,
+                    Container(
+                      width: Get.width,
+                      height: Get.height,
+                      color: Colors.black.withOpacity(0.2),
                     ),
-                    Text(
-                      "$rating",
-                      style: AllMaterial.inter(
-                        color: AllMaterial.colorWhite,
-                      ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          color: AllMaterial.colorWhite,
+                        ),
+                        Text(
+                          textAlign: TextAlign.start,
+                          "$rating",
+                          style: AllMaterial.inter(
+                            color: AllMaterial.colorWhite,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -552,6 +575,7 @@ abstract class AllMaterial {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
+                    textAlign: TextAlign.start,
                     "$namaPaket",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -561,6 +585,7 @@ abstract class AllMaterial {
                     ),
                   ),
                   Text(
+                    textAlign: TextAlign.start,
                     "Paket $jenisPaket",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -569,6 +594,7 @@ abstract class AllMaterial {
                     ),
                   ),
                   Text(
+                    textAlign: TextAlign.start,
                     "Rp. $hargaPaket",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -588,7 +614,11 @@ abstract class AllMaterial {
   }
 
   // Title Menu
-  static titleMenu({String? title, double fontSize = 18, double width = 3, double height = 20}) {
+  static titleMenu(
+      {String? title,
+      double fontSize = 18,
+      double width = 3,
+      double height = 20}) {
     return Row(
       children: [
         Container(
@@ -635,7 +665,6 @@ abstract class AllMaterial {
           child: Row(
             children: [
               SvgPicture.asset(
-                // ignore: deprecated_member_use
                 color: warnaSvg,
                 height: 24,
                 "$svg",
@@ -644,7 +673,7 @@ abstract class AllMaterial {
               Text(
                 "$title",
                 style: AllMaterial.inter(
-                  color:warnaText,
+                  color: warnaText,
                   fontSize: 15,
                   fontWeight: AllMaterial.fontSemiBold,
                 ),
@@ -836,10 +865,11 @@ abstract class AllMaterial {
     if (Get.context != null) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
         SnackBar(
+          backgroundColor: AllMaterial.colorBlack,
           duration: const Duration(seconds: 2),
           content: Text(
             title,
-            style: AllMaterial.inter(),
+            style: AllMaterial.inter(color: AllMaterial.colorWhite),
           ),
         ),
       );

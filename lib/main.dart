@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gvinum_travel/all_material.dart';
-import 'package:gvinum_travel/app/modules/home/views/home_view.dart';
+import 'package:gvinum_travel/app/modules/login_page/views/login_page_view.dart';
 import 'package:gvinum_travel/app/widgets/splash_screen/cusplash_screen_view.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -74,7 +74,7 @@ class _InitPageState extends State<InitPage> with WidgetsBindingObserver {
     if (showSplash) {
       return const CusplashScreen();
     } else {
-      return const HomeView();
+      return const LoginPageView();
       // return Obx(() {
       //   if (logController.isAuth.value) {
       //     return logController.periksaRole();
