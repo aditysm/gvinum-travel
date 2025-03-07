@@ -40,7 +40,7 @@ class NotifikasiView extends GetView<NotifikasiController> {
                     buttonLabel: "Cek Perjalanan Saya",
                     onTap: () {
                       Get.back();
-                      Get.to(()=> PerjalananSayaView());
+                      Get.to(() => const PerjalananSayaView());
                     },
                   );
                 },
@@ -59,7 +59,8 @@ class NotifikasiView extends GetView<NotifikasiController> {
                     buttonLabel: "Beri Rating",
                     onTap: () {
                       Get.back();
-                      AllMaterial.messageScaffold(title: "Fitur sedang digarap, coba lagi nanti!");
+                      AllMaterial.messageScaffold(
+                          title: "Fitur sedang digarap, coba lagi nanti!");
                     },
                   );
                 },
