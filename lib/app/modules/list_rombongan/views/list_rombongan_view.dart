@@ -132,56 +132,95 @@ class ListRombonganView extends GetView<ListRombonganController> {
   Widget _buildSeatGrid() {
     List<int> terisi = [1, 3, 5, 7];
     List<int> terbooking = [9, 11, 13, 15, 17, 19];
-    List<int> totalSeats = List.generate(32, (index) => index + 1);
+    List<int> totalSeats = List.generate(35, (index) => index + 1);
 
-    return Wrap(
-      spacing: 10,
-      runSpacing: 10,
-      alignment: WrapAlignment.center,
-      children: _generateSeats(totalSeats, terisi, terbooking),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double totalWidth = constraints.maxWidth;
+        double seatWidth = 45;
+        double seatSpacing = 10;
+        double seatRowWidth = (seatWidth * 2) + seatSpacing;
+
+        // Hitung jumlah baris sesuai jumlah kursi
+        int totalRows = (totalSeats.length / 4).ceil();
+
+        return Column(
+          children: List.generate(totalRows, (row) {
+            int startIndex = row * 4;
+            int endIndex = (startIndex + 4 > totalSeats.length)
+                ? totalSeats.length
+                : startIndex + 4;
+
+            List<int> rowSeats = totalSeats.sublist(startIndex, endIndex);
+
+            // Pastikan kursi selalu di kiri & kanan
+            List<int> leftSeats =
+                rowSeats.length >= 2 ? rowSeats.sublist(0, 2) : rowSeats;
+            List<int> rightSeats =
+                rowSeats.length > 2 ? rowSeats.sublist(2) : [];
+
+            double remainingSpace = (totalWidth - (seatRowWidth * 2)) / 2;
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildSeatRow(leftSeats, terisi, terbooking),
+                  SizedBox(width: remainingSpace), // Jarak tengah
+                  _buildSeatRow(rightSeats, terisi, terbooking),
+                ],
+              ),
+            );
+          }),
+        );
+      },
     );
   }
 
-  List<Widget> _generateSeats(
+  Widget _buildSeatRow(
       List<int> seats, List<int> terisi, List<int> terbooking) {
-    List<Widget> seatWidgets = [];
-    for (int i = 0; i < seats.length; i++) {
-      if (i % 4 == 2) {
-        seatWidgets.add(const SizedBox(width: 80));
-      }
+    return Row(
+      children: seats
+          .map((seat) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: _buildSeat(seat, terisi, terbooking),
+              ))
+          .toList(),
+    );
+  }
 
-      bool isTerisi = terisi.contains(seats[i]);
-      bool isTerbooking = terbooking.contains(seats[i]);
+  Widget _buildSeat(int seat, List<int> terisi, List<int> terbooking) {
+    bool isTerisi = terisi.contains(seat);
+    bool isTerbooking = terbooking.contains(seat);
 
-      seatWidgets.add(Container(
-        alignment: Alignment.center,
-        width: 45,
-        height: 45,
-        decoration: BoxDecoration(
+    return Container(
+      alignment: Alignment.center,
+      width: 45,
+      height: 45,
+      decoration: BoxDecoration(
+        color: isTerisi
+            ? AllMaterial.colorPrimary
+            : isTerbooking
+                ? null
+                : AllMaterial.colorGreySec,
+        borderRadius: BorderRadius.circular(10),
+        border: isTerbooking
+            ? Border.all(width: 2, color: AllMaterial.colorPrimary)
+            : null,
+      ),
+      child: Text(
+        seat.toString(),
+        style: AllMaterial.inter(
+          fontSize: 16,
           color: isTerisi
-              ? AllMaterial.colorPrimary
+              ? Colors.white
               : isTerbooking
-                  ? null
-                  : AllMaterial.colorGreySec,
-          borderRadius: BorderRadius.circular(10),
-          border: isTerbooking
-              ? Border.all(width: 2, color: AllMaterial.colorPrimary)
-              : null,
+                  ? AllMaterial.colorPrimary
+                  : AllMaterial.colorGreyPrim,
         ),
-        child: Text(
-          seats[i].toString(),
-          style: AllMaterial.inter(
-            fontSize: 16,
-            color: isTerisi
-                ? Colors.white
-                : isTerbooking
-                    ? AllMaterial.colorPrimary
-                    : AllMaterial.colorGreyPrim,
-          ),
-        ),
-      ));
-    }
-    return seatWidgets;
+      ),
+    );
   }
 
   Widget _buildBottomButton() {

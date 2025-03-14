@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gvinum_travel/all_material.dart';
-import 'package:gvinum_travel/app/modules/focus_produk/views/focus_produk_view.dart';
+import 'package:gvinum_travel/app/modules/perjalanan_saya/views/perjalanan_saya_view.dart';
 
 import '../controllers/pilih_paket_controller.dart';
 
@@ -16,7 +16,10 @@ class PilihPaketView extends GetView<PilihPaketController> {
         surfaceTintColor: AllMaterial.colorWhite,
         actions: [
           IconButton(
-            onPressed: () {AllMaterial.messageScaffold(title: "Fitur sedang digarap, coba lagi nanti!");},
+            onPressed: () {
+              AllMaterial.messageScaffold(
+                  title: "Fitur sedang digarap, coba lagi nanti!");
+            },
             icon: const Icon(Icons.filter_alt_rounded),
           ),
         ],
@@ -69,7 +72,10 @@ class PilihPaketView extends GetView<PilihPaketController> {
                     ),
                     backgroundColor: AllMaterial.colorPrimary,
                   ),
-                  onPressed: () {AllMaterial.messageScaffold(title: "Fitur sedang digarap, coba lagi nanti!");},
+                  onPressed: () {
+                    AllMaterial.messageScaffold(
+                        title: "Fitur sedang digarap, coba lagi nanti!");
+                  },
                   icon: const Icon(
                     Icons.search,
                     color: AllMaterial.colorWhite,
@@ -87,8 +93,9 @@ class PilihPaketView extends GetView<PilihPaketController> {
           child: ListView(
             children: [
               Wrap(
-                spacing: 14,
-                runSpacing: 14,
+                spacing: Get.width / 20,
+                runAlignment: WrapAlignment.spaceAround,
+                runSpacing: 18,
                 children: [
                   AllMaterial.productItem(
                     img: "assets/images/login.jpg",
@@ -96,7 +103,9 @@ class PilihPaketView extends GetView<PilihPaketController> {
                     jenisPaket: "Haji & Umroh",
                     namaPaket: "Umroh Summer Regular",
                     onTap: () {
-                      Get.to(() => const FocusProdukView());
+                      Get.to(() => const PerjalananSayaView(), arguments: {
+                        "isPerjalananSaya": false,
+                      });
                     },
                     rating: "4.2",
                   ),
@@ -106,7 +115,9 @@ class PilihPaketView extends GetView<PilihPaketController> {
                     jenisPaket: "Haji & Umroh",
                     namaPaket: "Umroh Summer Regular",
                     onTap: () {
-                      Get.to(() => const FocusProdukView());
+                      Get.to(() => const PerjalananSayaView(), arguments: {
+                        "isPerjalananSaya": false,
+                      });
                     },
                     rating: "4.2",
                   ),
@@ -116,7 +127,9 @@ class PilihPaketView extends GetView<PilihPaketController> {
                     jenisPaket: "Haji & Umroh",
                     namaPaket: "Umroh Summer Regular",
                     onTap: () {
-                      Get.to(() => const FocusProdukView());
+                      Get.to(() => const PerjalananSayaView(), arguments: {
+                        "isPerjalananSaya": false,
+                      });
                     },
                     rating: "4.2",
                   ),
@@ -126,7 +139,9 @@ class PilihPaketView extends GetView<PilihPaketController> {
                     jenisPaket: "Haji & Umroh",
                     namaPaket: "Umroh Summer Regular",
                     onTap: () {
-                      Get.to(() => const FocusProdukView());
+                      Get.to(() => const PerjalananSayaView(), arguments: {
+                        "isPerjalananSaya": false,
+                      });
                     },
                     rating: "4.2",
                   ),
@@ -136,7 +151,9 @@ class PilihPaketView extends GetView<PilihPaketController> {
                     jenisPaket: "Haji & Umroh",
                     namaPaket: "Umroh Summer Regular",
                     onTap: () {
-                      Get.to(() => const FocusProdukView());
+                      Get.to(() => const PerjalananSayaView(), arguments: {
+                        "isPerjalananSaya": false,
+                      });
                     },
                     rating: "4.2",
                   ),
@@ -146,7 +163,9 @@ class PilihPaketView extends GetView<PilihPaketController> {
                     jenisPaket: "Haji & Umroh",
                     namaPaket: "Umroh Summer Regular",
                     onTap: () {
-                      Get.to(() => const FocusProdukView());
+                      Get.to(() => const PerjalananSayaView(), arguments: {
+                        "isPerjalananSaya": false,
+                      });
                     },
                     rating: "4.2",
                   ),
@@ -156,7 +175,9 @@ class PilihPaketView extends GetView<PilihPaketController> {
                     jenisPaket: "Haji & Umroh",
                     namaPaket: "Umroh Summer Regular",
                     onTap: () {
-                      Get.to(() => const FocusProdukView());
+                      Get.to(() => const PerjalananSayaView(), arguments: {
+                        "isPerjalananSaya": false,
+                      });
                     },
                     rating: "4.2",
                   ),

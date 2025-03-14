@@ -57,12 +57,14 @@ abstract class AllMaterial {
   static cusButton({
     String? label,
     void Function()? onTap,
+    bool addIcon = false,
+    Widget? icon,
   }) {
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 10),
       child: SizedBox(
         width: Get.width,
-        child: ElevatedButton(
+        child: ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
             backgroundColor: AllMaterial.colorPrimary,
             padding: const EdgeInsets.symmetric(vertical: 14),
@@ -70,8 +72,9 @@ abstract class AllMaterial {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
+          icon: addIcon ? icon : null,
           onPressed: onTap,
-          child: Text(
+          label: Text(
             "$label",
             style: AllMaterial.inter(
               color: Colors.white,
@@ -508,106 +511,96 @@ abstract class AllMaterial {
     String? hargaPaket,
     void Function()? onTap,
   }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        width: 160,
-        margin: const EdgeInsets.only(right: 5),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: AllMaterial.colorStroke,
+    return Ink(
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.translucent,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            width: 160,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(color: AllMaterial.colorStroke),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(9),
+                  child: Stack(
+                    children: [
+                      Image.asset(
+                        "$img",
+                        fit: BoxFit.cover,
+                        height: 140,
+                        width: double.infinity,
+                      ),
+                      Positioned.fill(
+                        child: Container(
+                          color: Colors.black.withOpacity(0.2),
+                        ),
+                      ),
+                      Positioned(
+                        top: 3,
+                        right: 5,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.star,
+                              color: AllMaterial.colorWhite,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              "$rating",
+                              style: AllMaterial.inter(
+                                  color: AllMaterial.colorWhite),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 9, vertical: 9),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "$namaPaket",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AllMaterial.inter(
+                          fontWeight: AllMaterial.fontSemiBold,
+                          color: AllMaterial.colorBlack,
+                        ),
+                      ),
+                      Text(
+                        "Paket $jenisPaket", // Tidak perlu "$jenisPaket"
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style:
+                            AllMaterial.inter(color: AllMaterial.colorGreyPrim),
+                      ),
+                      Text(
+                        "Rp. $hargaPaket", // Tidak perlu "$hargaPaket"
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AllMaterial.inter(
+                          fontSize: 16,
+                          color: AllMaterial.colorPrimary,
+                          fontWeight: AllMaterial.fontSemiBold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        child: Column(
-          children: [
-            Container(
-              height: 140,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage("$img"),
-                ),
-              ),
-              child: Container(
-                alignment: Alignment.topRight,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 3,
-                  horizontal: 5,
-                ),
-                child: Stack(
-                  alignment: AlignmentDirectional.topEnd,
-                  children: [
-                    Container(
-                      width: Get.width,
-                      height: Get.height,
-                      color: Colors.black.withOpacity(0.2),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          color: AllMaterial.colorWhite,
-                        ),
-                        Text(
-                          textAlign: TextAlign.start,
-                          "$rating",
-                          style: AllMaterial.inter(
-                            color: AllMaterial.colorWhite,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(
-                top: 9,
-                left: 9,
-                bottom: 25,
-                right: 9,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    textAlign: TextAlign.start,
-                    "$namaPaket",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AllMaterial.inter(
-                      fontWeight: AllMaterial.fontSemiBold,
-                      color: AllMaterial.colorBlack,
-                    ),
-                  ),
-                  Text(
-                    textAlign: TextAlign.start,
-                    "Paket $jenisPaket",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AllMaterial.inter(
-                      color: AllMaterial.colorGreyPrim,
-                    ),
-                  ),
-                  Text(
-                    textAlign: TextAlign.start,
-                    "Rp. $hargaPaket",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AllMaterial.inter(
-                      fontSize: 16,
-                      color: AllMaterial.colorPrimary,
-                      fontWeight: AllMaterial.fontSemiBold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ),
       ),
     );

@@ -2,8 +2,12 @@ import 'package:get/get.dart';
 
 import '../modules/chat_room/bindings/chat_room_binding.dart';
 import '../modules/chat_room/views/chat_room_view.dart';
+import '../modules/edit_profil/bindings/edit_profil_binding.dart';
+import '../modules/edit_profil/views/edit_profil_view.dart';
 import '../modules/focus_produk/bindings/focus_produk_binding.dart';
 import '../modules/focus_produk/views/focus_produk_view.dart';
+import '../modules/forgot_password/bindings/forgot_password_binding.dart';
+import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/jadwal_manasik/bindings/jadwal_manasik_binding.dart';
@@ -80,6 +84,16 @@ class AppPages {
       name: _Paths.FOCUS_PRODUK,
       page: () => const FocusProdukView(),
       binding: FocusProdukBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOT_PASSWORD,
+      page: () => const ForgotPasswordView(),
+      binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_PROFIL,
+      page: () => const EditProfilView(),
+      binding: EditProfilBinding(),
     ),
   ];
 }

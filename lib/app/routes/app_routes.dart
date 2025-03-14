@@ -13,6 +13,8 @@ abstract class Routes {
   static const CHAT_ROOM = _Paths.CHAT_ROOM;
   static const PENGATURAN = _Paths.PENGATURAN;
   static const FOCUS_PRODUK = _Paths.FOCUS_PRODUK;
+  static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
+  static const EDIT_PROFIL = _Paths.EDIT_PROFIL;
 }
 
 abstract class _Paths {
@@ -27,4 +29,6 @@ abstract class _Paths {
   static const CHAT_ROOM = '/chat-room';
   static const PENGATURAN = '/pengaturan';
   static const FOCUS_PRODUK = '/focus-produk';
+  static const FORGOT_PASSWORD = '/forgot-password';
+  static const EDIT_PROFIL = '/edit-profil';
 }
