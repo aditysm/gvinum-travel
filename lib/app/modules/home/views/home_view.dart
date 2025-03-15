@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:gvinum_travel/all_material.dart';
 import 'package:gvinum_travel/app/modules/chat_room/controllers/chat_room_controller.dart';
 import 'package:gvinum_travel/app/modules/chat_room/views/chat_room_view.dart';
-import 'package:gvinum_travel/app/modules/focus_produk/views/focus_produk_view.dart';
+import 'package:gvinum_travel/app/modules/edit_profil/views/edit_profil_view.dart';
 import 'package:gvinum_travel/app/modules/jadwal_manasik/views/jadwal_manasik_view.dart';
 import 'package:gvinum_travel/app/modules/list_rombongan/views/list_rombongan_view.dart';
 import 'package:gvinum_travel/app/modules/login_page/views/login_page_view.dart';
@@ -92,9 +92,7 @@ class HomeView extends GetView<HomeController> {
                         GestureDetector(
                           onTap: () {
                             Get.back();
-                            AllMaterial.messageScaffold(
-                              title: "Fitur sedang digarap, coba lagi nanti!",
-                            );
+                            Get.to(() => const EditProfilView());
                           },
                           child: const Icon(
                             Icons.edit,
@@ -123,7 +121,9 @@ class HomeView extends GetView<HomeController> {
               svg: "assets/icon/perjalanan.svg",
               onTap: () {
                 Get.back();
-                Get.to(() => const PerjalananSayaView());
+                Get.to(() => const PerjalananSayaView(), arguments: {
+                  "isPerjalananSaya": true,
+                });
               },
               title: "Perjalanan Saya",
             ),
@@ -552,30 +552,39 @@ class HomeView extends GetView<HomeController> {
                             jenisPaket: "Umrah",
                             namaPaket: "Umrah Winter Regular",
                             onTap: () {
-                              Get.to(() => const FocusProdukView());
+                              Get.to(() => const PerjalananSayaView(), arguments: {
+                                "isPerjalananSaya": false,
+                              });
                             },
                             rating: "4.1",
                           ),
+                          const SizedBox(width: 5),
                           AllMaterial.productItem(
                             hargaPaket: "21.000.000",
                             img: "assets/images/login.jpg",
                             jenisPaket: "Umrah",
                             namaPaket: "Umrah Winter Regular",
                             onTap: () {
-                              Get.to(() => const FocusProdukView());
+                              Get.to(() => const PerjalananSayaView(), arguments: {
+                                "isPerjalananSaya": false,
+                              });
                             },
                             rating: "4.4",
                           ),
+                          const SizedBox(width: 5),
                           AllMaterial.productItem(
                             hargaPaket: "21.000.000",
                             img: "assets/images/login.jpg",
                             jenisPaket: "Umrah",
                             namaPaket: "Umrah Winter Regular",
                             onTap: () {
-                              Get.to(() => const FocusProdukView());
+                              Get.to(() => const PerjalananSayaView(), arguments: {
+                                "isPerjalananSaya": false,
+                              });
                             },
                             rating: "4.5",
                           ),
+                          const SizedBox(width: 5),
                         ],
                       ),
                     ),
