@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gvinum_travel/all_material.dart';
-import 'package:gvinum_travel/app/modules/perjalanan_saya/views/perjalanan_saya_view.dart';
+import 'package:gvinum_travel/app/modules/focus_produk/views/focus_produk_view.dart';
 
 import '../controllers/pilih_paket_controller.dart';
 
@@ -9,6 +9,7 @@ class PilihPaketView extends GetView<PilihPaketController> {
   const PilihPaketView({super.key});
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(PilihPaketController());
     return Scaffold(
       backgroundColor: AllMaterial.colorWhite,
       appBar: AppBar(
@@ -90,100 +91,45 @@ class PilihPaketView extends GetView<PilihPaketController> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(right: 22, left: 22, top: 20),
-          child: ListView(
-            children: [
-              Wrap(
-                spacing: Get.width / 20,
-                runAlignment: WrapAlignment.spaceAround,
-                runSpacing: 18,
-                children: [
-                  AllMaterial.productItem(
-                    img: "assets/images/login.jpg",
-                    hargaPaket: "25.000.000",
-                    jenisPaket: "Haji & Umroh",
-                    namaPaket: "Umroh Summer Regular",
-                    onTap: () {
-                      Get.to(() => const PerjalananSayaView(), arguments: {
-                        "isPerjalananSaya": false,
-                      });
-                    },
-                    rating: "4.2",
-                  ),
-                  AllMaterial.productItem(
-                    img: "assets/images/login.jpg",
-                    hargaPaket: "25.000.000",
-                    jenisPaket: "Haji & Umroh",
-                    namaPaket: "Umroh Summer Regular",
-                    onTap: () {
-                      Get.to(() => const PerjalananSayaView(), arguments: {
-                        "isPerjalananSaya": false,
-                      });
-                    },
-                    rating: "4.2",
-                  ),
-                  AllMaterial.productItem(
-                    img: "assets/images/login.jpg",
-                    hargaPaket: "25.000.000",
-                    jenisPaket: "Haji & Umroh",
-                    namaPaket: "Umroh Summer Regular",
-                    onTap: () {
-                      Get.to(() => const PerjalananSayaView(), arguments: {
-                        "isPerjalananSaya": false,
-                      });
-                    },
-                    rating: "4.2",
-                  ),
-                  AllMaterial.productItem(
-                    img: "assets/images/login.jpg",
-                    hargaPaket: "25.000.000",
-                    jenisPaket: "Haji & Umroh",
-                    namaPaket: "Umroh Summer Regular",
-                    onTap: () {
-                      Get.to(() => const PerjalananSayaView(), arguments: {
-                        "isPerjalananSaya": false,
-                      });
-                    },
-                    rating: "4.2",
-                  ),
-                  AllMaterial.productItem(
-                    img: "assets/images/login.jpg",
-                    hargaPaket: "25.000.000",
-                    jenisPaket: "Haji & Umroh",
-                    namaPaket: "Umroh Summer Regular",
-                    onTap: () {
-                      Get.to(() => const PerjalananSayaView(), arguments: {
-                        "isPerjalananSaya": false,
-                      });
-                    },
-                    rating: "4.2",
-                  ),
-                  AllMaterial.productItem(
-                    img: "assets/images/login.jpg",
-                    hargaPaket: "25.000.000",
-                    jenisPaket: "Haji & Umroh",
-                    namaPaket: "Umroh Summer Regular",
-                    onTap: () {
-                      Get.to(() => const PerjalananSayaView(), arguments: {
-                        "isPerjalananSaya": false,
-                      });
-                    },
-                    rating: "4.2",
-                  ),
-                  AllMaterial.productItem(
-                    img: "assets/images/login.jpg",
-                    hargaPaket: "25.000.000",
-                    jenisPaket: "Haji & Umroh",
-                    namaPaket: "Umroh Summer Regular",
-                    onTap: () {
-                      Get.to(() => const PerjalananSayaView(), arguments: {
-                        "isPerjalananSaya": false,
-                      });
-                    },
-                    rating: "4.2",
-                  ),
-                ],
-              ),
-            ],
+          child: Obx(
+            () {
+              var paket = controller.package.value?.data?.length ?? 0;
+              if (paket > 0) {
+                return ListView(
+                  children: [
+                    Wrap(
+                      spacing: Get.width / 20,
+                      runAlignment: WrapAlignment.spaceAround,
+                      runSpacing: 18,
+                      alignment: (paket == 1)
+                          ? WrapAlignment.start
+                          : WrapAlignment.center,
+                      children: List.generate(paket, (index) {
+                        var data = controller.package.value?.data?[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: AllMaterial.productItem(
+                            hargaPaket:
+                                "${data?.package?.packagePrices?[0].price}",
+                            img: "${data?.package?.image}",
+                            jenisPaket: "${data?.package?.category}",
+                            namaPaket: "${data?.package?.name}",
+                            onTap: () {
+                              Get.to(
+                                () => const FocusProdukView(),
+                              );
+                            },
+                            rating: "${data?.avgRating ?? "0.0"}",
+                          ),
+                        );
+                      }),
+                    ),
+                  ],
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
           ),
         ),
       ),

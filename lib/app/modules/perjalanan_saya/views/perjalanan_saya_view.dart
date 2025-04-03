@@ -10,17 +10,14 @@ class PerjalananSayaView extends GetView<PerjalananSayaController> {
   const PerjalananSayaView({super.key});
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(PerjalananSayaController());
-    RxInt count = 1.obs;
-    var arg = Get.arguments;
-    bool isPerjalananSaya = arg["isPerjalananSaya"] ?? false;
+    // final controller = Get.put(PerjalananSayaController());
     return Scaffold(
       backgroundColor: AllMaterial.colorWhite,
       appBar: AppBar(
         backgroundColor: AllMaterial.colorWhite,
         surfaceTintColor: AllMaterial.colorWhite,
         title: Text(
-          isPerjalananSaya ? 'Perjalanan Saya' : "Umroh Winter Regular",
+          'Perjalanan Saya',
           style: AllMaterial.inter(
             color: AllMaterial.colorBlack,
             fontWeight: AllMaterial.fontBold,
@@ -537,7 +534,11 @@ class PerjalananSayaView extends GetView<PerjalananSayaController> {
                                     jenisPaket: "Umrah",
                                     namaPaket: "Umrah Winter Regular",
                                     onTap: () {
-                                      Get.to(() => const FocusProdukView());
+                                      Get.back();
+                                      Get.to(() => const FocusProdukView(),
+                                          arguments: {
+                                            "isPerjalananSaya": true,
+                                          });
                                     },
                                     rating: "4.1",
                                   ),
@@ -548,7 +549,11 @@ class PerjalananSayaView extends GetView<PerjalananSayaController> {
                                     jenisPaket: "Umrah",
                                     namaPaket: "Umrah Winter Regular",
                                     onTap: () {
-                                      Get.to(() => const FocusProdukView());
+                                      Get.back();
+                                      Get.to(() => const FocusProdukView(),
+                                          arguments: {
+                                            "isPerjalananSaya": true,
+                                          });
                                     },
                                     rating: "4.4",
                                   ),
@@ -559,7 +564,11 @@ class PerjalananSayaView extends GetView<PerjalananSayaController> {
                                     jenisPaket: "Umrah",
                                     namaPaket: "Umrah Winter Regular",
                                     onTap: () {
-                                      Get.to(() => const FocusProdukView());
+                                      Get.back();
+                                      Get.to(() => const FocusProdukView(),
+                                          arguments: {
+                                            "isPerjalananSaya": true,
+                                          });
                                     },
                                     rating: "4.5",
                                   ),
@@ -578,318 +587,18 @@ class PerjalananSayaView extends GetView<PerjalananSayaController> {
           ),
         ],
       ),
-      bottomNavigationBar: isPerjalananSaya
-          ? null
-          : Container(
-              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
-              child: AllMaterial.cusButton(
-                addIcon: true,
-                icon: const Icon(
-                  Icons.shopping_cart_outlined,
-                  color: AllMaterial.colorWhite,
-                ),
-                label: "Pesan Paket",
-                onTap: () {
-                  AllMaterial.detilKonten(
-                    customDetil: true,
-                    customDetilWidget: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 15),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(20)),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: Container(
-                              height: 5,
-                              width: 135,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: AllMaterial.colorGreySec,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 35),
-                          Row(
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  image: const DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image:
-                                        AssetImage("assets/images/login.jpg"),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Umrah Winter Regular",
-                                    style: AllMaterial.inter(
-                                      fontWeight: AllMaterial.fontSemiBold,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Seats: 32",
-                                    style: AllMaterial.inter(
-                                      color: AllMaterial.colorGreyPrim,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            "Jenis Paket",
-                            style: AllMaterial.inter(
-                              fontWeight: AllMaterial.fontMedium,
-                              color: AllMaterial.colorGreyPrim,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Obx(
-                            () => Wrap(
-                              spacing: 10.0,
-                              children:
-                                  controller.namaPaket.map((String paket) {
-                                return ChoiceChip(
-                                  checkmarkColor: AllMaterial.colorWhite,
-                                  label: Text(
-                                    paket,
-                                    style: const TextStyle(
-                                      color: AllMaterial.colorWhite,
-                                    ),
-                                  ),
-                                  elevation: 0,
-                                  side: const BorderSide(
-                                    width: 0,
-                                    color: Colors.transparent,
-                                  ),
-                                  selected:
-                                      controller.selectedPacket.value == paket,
-                                  onSelected: (bool selected) {
-                                    controller.selectedPacket.value = paket;
-                                  },
-                                  selectedColor: AllMaterial.colorPrimary,
-                                  backgroundColor: AllMaterial.colorSoftPrimary,
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            "Jenis Kamar",
-                            style: AllMaterial.inter(
-                              fontWeight: AllMaterial.fontMedium,
-                              color: AllMaterial.colorGreyPrim,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Obx(
-                            () => Wrap(
-                              spacing: 10.0,
-                              children:
-                                  controller.namaKamar.map((String kamar) {
-                                return ChoiceChip(
-                                  checkmarkColor: AllMaterial.colorWhite,
-                                  label: Text(
-                                    kamar,
-                                    style: const TextStyle(
-                                      color: AllMaterial.colorWhite,
-                                    ),
-                                  ),
-                                  elevation: 0,
-                                  side: const BorderSide(
-                                    width: 0,
-                                    color: Colors.transparent,
-                                  ),
-                                  selected:
-                                      controller.selectedRoom.value == kamar,
-                                  onSelected: (bool selected) {
-                                    controller.selectedRoom.value = kamar;
-                                  },
-                                  selectedColor: AllMaterial.colorPrimary,
-                                  backgroundColor: AllMaterial.colorSoftPrimary,
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          const Divider(),
-                          const SizedBox(height: 5),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Jumlah",
-                                style: AllMaterial.inter(
-                                  fontSize: 16,
-                                  fontWeight: AllMaterial.fontMedium,
-                                  color: AllMaterial.colorGreyPrim,
-                                ),
-                              ),
-                              Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 4),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        if (count > 1) count--;
-                                      },
-                                      child: Container(
-                                        width: 30,
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: AllMaterial.colorGreyPrim),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            "-",
-                                            style: AllMaterial.inter(
-                                                color:
-                                                    AllMaterial.colorGreyPrim,
-                                                fontSize: 18),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 30,
-                                      height: 30,
-                                      decoration: const BoxDecoration(
-                                        border: Border.symmetric(
-                                          horizontal: BorderSide(
-                                            color: AllMaterial.colorGreyPrim,
-                                          ),
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Obx(() => Text(
-                                              "$count",
-                                              style: const TextStyle(
-                                                  color:
-                                                      AllMaterial.colorGreyPrim,
-                                                  fontSize: 18),
-                                            )),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        count++;
-                                      },
-                                      child: Container(
-                                        width: 30,
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: AllMaterial.colorGreyPrim),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            "+",
-                                            style: AllMaterial.inter(
-                                                color:
-                                                    AllMaterial.colorGreyPrim,
-                                                fontSize: 18),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 5),
-                          const Divider(),
-                          const SizedBox(height: 5),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Total Harga",
-                                style: AllMaterial.inter(
-                                  fontWeight: AllMaterial.fontSemiBold,
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    textAlign: TextAlign.start,
-                                    "Rp. 21.000.000",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AllMaterial.inter(
-                                      fontSize: 20,
-                                      color: AllMaterial.colorPrimary,
-                                      fontWeight: AllMaterial.fontBold,
-                                    ),
-                                  ),
-                                  ElevatedButton.icon(
-                                    onPressed: () {
-                                      Get.back();
-                                      AllMaterial.messageScaffold(
-                                        title:
-                                            "Fitur sedang digarap, coba lagi nanti!",
-                                      );
-                                    },
-                                    label: Text(
-                                      "Bayar",
-                                      style: AllMaterial.inter(
-                                        color: AllMaterial.colorWhite,
-                                        fontSize: 16,
-                                        fontWeight: AllMaterial.fontSemiBold,
-                                      ),
-                                    ),
-                                    icon: SvgPicture.asset(
-                                      "assets/icon/chat.svg",
-                                      width: 18,
-                                      height: 18,
-                                      // ignore: deprecated_member_use
-                                      color: AllMaterial.colorWhite,
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AllMaterial.colorPrimary,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          10,
-                                        ),
-                                      ),
-                                      elevation: 0,
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 14,
-                                        horizontal: 15,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+        child: AllMaterial.cusButton(
+          addIcon: true,
+          icon: const Icon(
+            Icons.clear,
+            color: AllMaterial.colorWhite,
+          ),
+          label: "Batalkan Paket",
+          onTap: () {},
+        ),
+      ),
     );
   }
 }

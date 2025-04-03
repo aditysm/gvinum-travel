@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:gvinum_travel/all_material.dart';
+import 'package:gvinum_travel/app/controller/general_controller.dart';
+import 'package:gvinum_travel/app/data/api_url.dart';
 import 'package:gvinum_travel/app/modules/chat_room/controllers/chat_room_controller.dart';
 import 'package:gvinum_travel/app/modules/chat_room/views/chat_room_view.dart';
 import 'package:gvinum_travel/app/modules/edit_profil/views/edit_profil_view.dart';
+import 'package:gvinum_travel/app/modules/focus_produk/views/focus_produk_view.dart';
 import 'package:gvinum_travel/app/modules/jadwal_manasik/views/jadwal_manasik_view.dart';
-import 'package:gvinum_travel/app/modules/list_rombongan/views/list_rombongan_view.dart';
-import 'package:gvinum_travel/app/modules/login_page/views/login_page_view.dart';
 import 'package:gvinum_travel/app/modules/notifikasi/views/notifikasi_view.dart';
 import 'package:gvinum_travel/app/modules/pengaturan/views/pengaturan_view.dart';
-import 'package:gvinum_travel/app/modules/perjalanan_saya/views/perjalanan_saya_view.dart';
 import 'package:gvinum_travel/app/modules/pilih_paket/views/pilih_paket_view.dart';
+import 'package:gvinum_travel/app/modules/pilihan_perjalanan/views/pilihan_perjalanan_view.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -20,6 +21,8 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final chatCont = Get.put(ChatRoomController());
+    final controller = Get.put(HomeController());
+    controller.perjalanan.fetchBookingPackage();
     return Scaffold(
       backgroundColor: AllMaterial.colorWhite,
       appBar: AppBar(
@@ -71,45 +74,112 @@ class HomeView extends GetView<HomeController> {
           children: [
             Row(
               children: [
-                const CircleAvatar(
-                  radius: 30,
-                ),
-                const SizedBox(width: 15),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Habil Arlian Asrori",
-                          style: AllMaterial.inter(
-                            fontWeight: AllMaterial.fontSemiBold,
-                            color: AllMaterial.colorBlack,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(width: 5),
-                        GestureDetector(
-                          onTap: () {
-                            Get.back();
-                            Get.to(() => const EditProfilView());
-                          },
-                          child: const Icon(
-                            Icons.edit,
-                            size: 18,
+                Obx(
+                  () => controller.user.value?.data?.fotoProfile == "" ||
+                          controller.user.value?.data?.fotoProfile == null
+                      ? Container(
+                          alignment: Alignment.center,
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(1000),
                             color: AllMaterial.colorSoftPrimary,
                           ),
+                          child: Obx(
+                            () => Text(
+                              controller.user.value?.data?.name?[0]
+                                      .toUpperCase() ??
+                                  "P",
+                              style: AllMaterial.inter(
+                                color: AllMaterial.colorWhite,
+                                fontWeight: AllMaterial.fontSemiBold,
+                                fontSize: 40,
+                              ),
+                            ),
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            // Get.to(
+                            //   () => HeroImage(
+                            //     imageUrl: mainCont
+                            //             .profilWalas.value?.data?.fotoProfile
+                            //             ?.replaceAll(
+                            //                 "localhost", ApiUrl.baseUrl) ??
+                            //         "https://picsum.photos/200/300?grayscale",
+                            //   ),
+                            // );
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(1000),
+                              color: AllMaterial.colorSoftPrimary,
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                  controller.user.value?.data?.fotoProfile
+                                          ?.replaceAll(
+                                        "localhost",
+                                        ApiUrl.baseUrl,
+                                      ) ??
+                                      "https://picsum.photos/200/300?grayscale",
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
-                    Text(
-                      "aabiljr@gmail.com",
-                      style: AllMaterial.inter(
-                        fontWeight: AllMaterial.fontMedium,
-                        color: AllMaterial.colorGreyPrim,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Obx(
+                            () => Text(
+                              AllMaterial.formatNamaPanjang(
+                                  controller.user.value?.data?.name ?? ""),
+                              style: AllMaterial.inter(
+                                fontWeight: AllMaterial.fontSemiBold,
+                                color: AllMaterial.colorBlack,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          GestureDetector(
+                            onTap: () {
+                              Get.back();
+                              Get.to(() => const EditProfilView());
+                            },
+                            child: const Icon(
+                              Icons.edit,
+                              size: 18,
+                              color: AllMaterial.colorSoftPrimary,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      Obx(
+                        () => FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            AllMaterial.formatEmail(
+                                controller.user.value?.data?.email ?? ""),
+                            style: AllMaterial.inter(
+                              fontWeight: AllMaterial.fontMedium,
+                              color: AllMaterial.colorGreyPrim,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -121,7 +191,7 @@ class HomeView extends GetView<HomeController> {
               svg: "assets/icon/perjalanan.svg",
               onTap: () {
                 Get.back();
-                Get.to(() => const PerjalananSayaView(), arguments: {
+                Get.to(() => const PilihanPerjalananView(), arguments: {
                   "isPerjalananSaya": true,
                 });
               },
@@ -141,7 +211,9 @@ class HomeView extends GetView<HomeController> {
               svg: "assets/icon/rombongan.svg",
               onTap: () {
                 Get.back();
-                Get.to(() => const ListRombonganView());
+                Get.to(() => const PilihanPerjalananView(), arguments: {
+                  "isPerjalananSaya": false,
+                });
               },
               title: "List Rombongan",
             ),
@@ -169,8 +241,17 @@ class HomeView extends GetView<HomeController> {
               warnaSvg: AllMaterial.colorSoftPrimary,
               warnaText: AllMaterial.colorSoftPrimary,
               onTap: () {
-                Get.back();
-                Get.to(() => const LoginPageView());
+                final genC = Get.put(GeneralController());
+                AllMaterial.cusDialogValidasi(
+                  title: "Logout",
+                  subtitle: "Apakah Kamu yakin?",
+                  onConfirm: () async {
+                    await genC.logout();
+                    Get.back();
+                    Get.back();
+                  },
+                  onCancel: () => Get.back(),
+                );
               },
               title: "Logout",
             ),
@@ -239,7 +320,7 @@ class HomeView extends GetView<HomeController> {
                     ElevatedButton.icon(
                       onPressed: () {
                         AllMaterial.openWhatsApp(
-                            phone: "6285728565172",
+                            phone: "6285738565172",
                             message:
                                 "Assalamu’alaikum warahmatullahi wabarakatuh,\n\n"
                                 "Saya ingin bertanya mengenai paket haji/umroh yang tersedia. Bisa dibantu dengan informasi terkait jadwal keberangkatan, fasilitas, serta biaya yang ditawarkan?\n\n"
@@ -422,7 +503,10 @@ class HomeView extends GetView<HomeController> {
                           ),
                           InkWell(
                             onTap: () {
-                              Get.to(() => const ListRombonganView());
+                              Get.to(() => const PilihanPerjalananView(),
+                                  arguments: {
+                                    "isPerjalananSaya": false,
+                                  });
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -544,48 +628,40 @@ class HomeView extends GetView<HomeController> {
                     scrollDirection: Axis.horizontal,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16),
-                      child: Row(
-                        children: [
-                          AllMaterial.productItem(
-                            hargaPaket: "21.000.000",
-                            img: "assets/images/login.jpg",
-                            jenisPaket: "Umrah",
-                            namaPaket: "Umrah Winter Regular",
-                            onTap: () {
-                              Get.to(() => const PerjalananSayaView(), arguments: {
-                                "isPerjalananSaya": false,
-                              });
-                            },
-                            rating: "4.1",
-                          ),
-                          const SizedBox(width: 5),
-                          AllMaterial.productItem(
-                            hargaPaket: "21.000.000",
-                            img: "assets/images/login.jpg",
-                            jenisPaket: "Umrah",
-                            namaPaket: "Umrah Winter Regular",
-                            onTap: () {
-                              Get.to(() => const PerjalananSayaView(), arguments: {
-                                "isPerjalananSaya": false,
-                              });
-                            },
-                            rating: "4.4",
-                          ),
-                          const SizedBox(width: 5),
-                          AllMaterial.productItem(
-                            hargaPaket: "21.000.000",
-                            img: "assets/images/login.jpg",
-                            jenisPaket: "Umrah",
-                            namaPaket: "Umrah Winter Regular",
-                            onTap: () {
-                              Get.to(() => const PerjalananSayaView(), arguments: {
-                                "isPerjalananSaya": false,
-                              });
-                            },
-                            rating: "4.5",
-                          ),
-                          const SizedBox(width: 5),
-                        ],
+                      child: Obx(
+                        () {
+                          var paket =
+                              controller.package.value?.data?.length ?? 0;
+                          if (paket > 0) {
+                            return Row(
+                              children: List.generate(paket, (index) {
+                                var data =
+                                    controller.package.value?.data?[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 5),
+                                  child: AllMaterial.productItem(
+                                    hargaPaket:
+                                        "${data?.package?.packagePrices?[0].price}",
+                                    img: "${data?.package?.image}",
+                                    jenisPaket: "${data?.package?.category}",
+                                    namaPaket: "${data?.package?.name}",
+                                    onTap: () {
+                                      Get.to(
+                                        () => const FocusProdukView(),
+                                        arguments: {
+                                          "idPackage": data?.package?.id ?? 0
+                                        },
+                                      );
+                                    },
+                                    rating: "${data?.avgRating ?? "0.0"}",
+                                  ),
+                                );
+                              }),
+                            );
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
                       ),
                     ),
                   ),

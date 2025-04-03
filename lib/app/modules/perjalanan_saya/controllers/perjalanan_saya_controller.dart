@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 class PerjalananSayaController extends GetxController {
-    var selectedPacket = ''.obs;
+  var selectedPacket = ''.obs;
   var selectedRoom = ''.obs;
   var namaPaket = ["SILVER", "GOLD", "PREMIUM"];
   var namaKamar = ["QUAD", "DOUBLE", "TRIPLE"];
@@ -14,4 +14,5 @@ class PerjalananSayaController extends GetxController {
     }
     update();
   }
+  
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gvinum_travel/all_material.dart';
+import 'package:gvinum_travel/app/modules/home/views/home_view.dart';
+import 'package:gvinum_travel/app/modules/login_page/controllers/login_page_controller.dart';
 import 'package:gvinum_travel/app/modules/login_page/views/login_page_view.dart';
 import 'package:gvinum_travel/app/widgets/splash_screen/cusplash_screen_view.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -36,7 +38,7 @@ class InitPage extends StatefulWidget {
 
 class _InitPageState extends State<InitPage> with WidgetsBindingObserver {
   bool showSplash = true;
-  // final LoginPageController logController = Get.put(LoginPageController());
+  final LoginPageController logController = Get.put(LoginPageController());
 
   @override
   void initState() {
@@ -48,7 +50,7 @@ class _InitPageState extends State<InitPage> with WidgetsBindingObserver {
         setState(() {
           showSplash = false;
         });
-        // logController.checkAuthentication();
+        logController.checkAuthentication();
       }
     });
   }
@@ -74,14 +76,13 @@ class _InitPageState extends State<InitPage> with WidgetsBindingObserver {
     if (showSplash) {
       return const CusplashScreen();
     } else {
-      return const LoginPageView();
-      // return Obx(() {
-      //   if (logController.isAuth.value) {
-      //     return logController.periksaRole();
-      //   } else {
-      //     return const LoginPageView();
-      //   }
-      // });
+      return Obx(() {
+        if (logController.isAuth.value) {
+          return const HomeView();
+        } else {
+          return const LoginPageView();
+        }
+      });
     }
   }
 }
