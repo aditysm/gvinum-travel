@@ -24,6 +24,8 @@ import '../modules/perjalanan_saya/bindings/perjalanan_saya_binding.dart';
 import '../modules/perjalanan_saya/views/perjalanan_saya_view.dart';
 import '../modules/pilih_paket/bindings/pilih_paket_binding.dart';
 import '../modules/pilih_paket/views/pilih_paket_view.dart';
+import '../modules/pilihan_perjalanan/bindings/pilihan_perjalanan_binding.dart';
+import '../modules/pilihan_perjalanan/views/pilihan_perjalanan_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -94,6 +96,11 @@ class AppPages {
       name: _Paths.EDIT_PROFIL,
       page: () => const EditProfilView(),
       binding: EditProfilBinding(),
+    ),
+    GetPage(
+      name: _Paths.PILIHAN_PERJALANAN,
+      page: () => const PilihanPerjalananView(),
+      binding: PilihanPerjalananBinding(),
     ),
   ];
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gvinum_travel/all_material.dart';
 import 'package:gvinum_travel/app/modules/forgot_password/views/forgot_password_view.dart';
-import 'package:gvinum_travel/app/modules/home/views/home_view.dart';
 
 import '../controllers/login_page_controller.dart';
 
@@ -73,7 +72,7 @@ class LoginPageView extends GetView<LoginPageController> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       hoverColor: AllMaterial.colorWhite,
-                      labelText: "Username",
+                      labelText: "Email",
                       labelStyle: AllMaterial.inter(
                         color: AllMaterial.colorWhite,
                       ),
@@ -158,12 +157,10 @@ class LoginPageView extends GetView<LoginPageController> {
                     children: [
                       AllMaterial.cusButton(
                         label: "Login",
-                        onTap: () {
-                          Get.to(() => const HomeView());
-                          // AllMaterial.messageScaffold(
-                          //   title:
-                          //       "Permintaan tidak valid. Periksa input Anda!",
-                          // );
+                        onTap: () async {
+                          await loginController.login(
+                              loginController.userC.text,
+                              loginController.passC.text);
                         },
                       ),
                       const SizedBox(height: 16),

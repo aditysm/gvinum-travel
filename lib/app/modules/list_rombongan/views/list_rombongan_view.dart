@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gvinum_travel/all_material.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/list_rombongan_controller.dart';
 
@@ -9,6 +10,9 @@ class ListRombonganView extends GetView<ListRombonganController> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
+    final controller = Get.put(ListRombonganController());
+    var arg = Get.arguments;
     return Scaffold(
       backgroundColor: AllMaterial.colorWhite,
       appBar: AppBar(
@@ -33,7 +37,7 @@ class ListRombonganView extends GetView<ListRombonganController> {
             children: [
               _buildStatusIndicatorRow(),
               const SizedBox(height: 30),
-              _buildTitleSection(),
+              _buildTitleSection(arg),
               const SizedBox(height: 20),
               Expanded(child: SingleChildScrollView(child: _buildSeatGrid())),
               _buildBottomButton(),
@@ -66,11 +70,11 @@ class ListRombonganView extends GetView<ListRombonganController> {
     );
   }
 
-  Widget _buildTitleSection() {
+  Widget _buildTitleSection(dynamic arg) {
     return Column(
       children: [
         Text(
-          "Umrah Winter Regular",
+          "${arg["namePackage"] ?? ""}",
           textAlign: TextAlign.center,
           style: AllMaterial.inter(
             color: AllMaterial.colorBlack,
@@ -88,7 +92,8 @@ class ListRombonganView extends GetView<ListRombonganController> {
             ),
             children: [
               TextSpan(
-                text: "3 Februari 2025",
+                text: DateFormat('EEEE, dd MMMM yyyy', 'id_ID')
+                    .format(arg["departurePackage"]),
                 style: AllMaterial.inter(
                   fontWeight: AllMaterial.fontMedium,
                   color: AllMaterial.colorSoftPrimary,
@@ -130,49 +135,54 @@ class ListRombonganView extends GetView<ListRombonganController> {
   }
 
   Widget _buildSeatGrid() {
-    List<int> terisi = [1, 3, 5, 7];
-    List<int> terbooking = [9, 11, 13, 15, 17, 19];
-    List<int> totalSeats = List.generate(35, (index) => index + 1);
+    return Obx(
+      () {
+        List<int> terisi =
+            List.generate(controller.countFilled.value, (index) => index + 1);
+        List<int> terbooking =
+            List.generate(controller.countBooking.value, (index) => index + 1);
+        List<int> totalSeats = List.generate(
+            controller.countAvailable.value, (index) => index + 1);
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        double totalWidth = constraints.maxWidth;
-        double seatWidth = 45;
-        double seatSpacing = 10;
-        double seatRowWidth = (seatWidth * 2) + seatSpacing;
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            double totalWidth = constraints.maxWidth;
+            double seatWidth = 45;
+            double seatSpacing = 10;
+            double seatRowWidth = (seatWidth * 2) + seatSpacing;
 
-        // Hitung jumlah baris sesuai jumlah kursi
-        int totalRows = (totalSeats.length / 4).ceil();
+            int totalRows = (totalSeats.length / 4).ceil();
 
-        return Column(
-          children: List.generate(totalRows, (row) {
-            int startIndex = row * 4;
-            int endIndex = (startIndex + 4 > totalSeats.length)
-                ? totalSeats.length
-                : startIndex + 4;
+            return Column(
+              children: List.generate(totalRows, (row) {
+                int startIndex = row * 4;
+                int endIndex = (startIndex + 4 > totalSeats.length)
+                    ? totalSeats.length
+                    : startIndex + 4;
 
-            List<int> rowSeats = totalSeats.sublist(startIndex, endIndex);
+                List<int> rowSeats = totalSeats.sublist(startIndex, endIndex);
 
-            // Pastikan kursi selalu di kiri & kanan
-            List<int> leftSeats =
-                rowSeats.length >= 2 ? rowSeats.sublist(0, 2) : rowSeats;
-            List<int> rightSeats =
-                rowSeats.length > 2 ? rowSeats.sublist(2) : [];
+                List<int> leftSeats =
+                    rowSeats.length >= 2 ? rowSeats.sublist(0, 2) : rowSeats;
+                List<int> rightSeats =
+                    rowSeats.length > 2 ? rowSeats.sublist(2) : [];
 
-            double remainingSpace = (totalWidth - (seatRowWidth * 2)) / 2;
+                double remainingSpace = (totalWidth - (seatRowWidth * 2)) / 2;
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildSeatRow(leftSeats, terisi, terbooking),
-                  SizedBox(width: remainingSpace), // Jarak tengah
-                  _buildSeatRow(rightSeats, terisi, terbooking),
-                ],
-              ),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildSeatRow(leftSeats, terisi, terbooking),
+                      SizedBox(width: remainingSpace),
+                      _buildSeatRow(rightSeats, terisi, terbooking),
+                    ],
+                  ),
+                );
+              }),
             );
-          }),
+          },
         );
       },
     );
@@ -224,47 +234,48 @@ class ListRombonganView extends GetView<ListRombonganController> {
   }
 
   Widget _buildBottomButton() {
-    return AllMaterial.cusButton(
-      label: "Cek Rombongan",
-      onTap: () {
-        AllMaterial.detilKonten(
-          addSubtitle: false,
-          konten: SizedBox(
-            height: Get.height * 0.6,
-            child: ListView.builder(
-              itemCount: 32,
-              itemBuilder: (context, index) => ListTile(
-                trailing: Container(
-                  width: 20,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    color: AllMaterial.colorPrimary,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-                title: Text(
-                  "Mu'tamir Ke-${index + 1}",
-                  style: AllMaterial.inter(
-                    fontWeight: AllMaterial.fontMedium,
-                    fontSize: 17,
-                  ),
-                ),
-                dense: true,
-                leading: Text(
-                  "${index + 1}.",
-                  style: AllMaterial.inter(
-                    fontWeight: AllMaterial.fontBold,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          title: "List Rombongan",
-          buttonLabel: "Tutup List",
-          onTap: () {
-            Get.back();
-          },
+    return Obx(
+      () {
+        var user = controller.rombongan.value?.data?.user?.length;
+        return AllMaterial.cusButton(
+          label: "Cek Rombongan",
+          onTap: user == 0
+              ? null
+              : () {
+                  AllMaterial.detilKonten(
+                    addSubtitle: false,
+                    konten: SizedBox(
+                      height: Get.height * 0.6,
+                      child: ListView.builder(
+                        itemCount:
+                            controller.rombongan.value?.data?.user?.length,
+                        itemBuilder: (context, index) => ListTile(
+                          title: Text(
+                            overflow: TextOverflow.ellipsis,
+                            "${controller.rombongan.value?.data?.user?[index].name}",
+                            style: AllMaterial.inter(
+                              fontWeight: AllMaterial.fontMedium,
+                              fontSize: 17,
+                            ),
+                          ),
+                          dense: true,
+                          leading: Text(
+                            "${index + 1}.",
+                            style: AllMaterial.inter(
+                              fontWeight: AllMaterial.fontBold,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    title: "List Rombongan",
+                    buttonLabel: "Tutup List",
+                    onTap: () {
+                      Get.back();
+                    },
+                  );
+                },
         );
       },
     );

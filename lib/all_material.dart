@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gvinum_travel/app/data/api_url.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -530,11 +531,18 @@ abstract class AllMaterial {
                   borderRadius: BorderRadius.circular(9),
                   child: Stack(
                     children: [
-                      Image.asset(
-                        "$img",
-                        fit: BoxFit.cover,
-                        height: 140,
-                        width: double.infinity,
+                      Image.network(
+                        img?.replaceAll(
+                              "localhost",
+                              ApiUrl.baseUrl,
+                            ) ??
+                            "https://picsum.photos/200/300?grayscale",
+                        errorBuilder: (context, error, stackTrace) {
+                          return SvgPicture.asset(
+                            "assets/icon/kaaba.svg",
+                            color: AllMaterial.colorGreyPrim,
+                          );
+                        },
                       ),
                       Positioned.fill(
                         child: Container(
@@ -963,6 +971,7 @@ abstract class AllMaterial {
     DateTime parsedDate = DateTime.parse(isoDate);
     String formattedDate =
         DateFormat('EEEE, dd MMMM yyyy', 'id_ID').format(parsedDate);
+
     return formattedDate;
   }
 
@@ -995,6 +1004,16 @@ abstract class AllMaterial {
         namaArray.skip(3).map((nama) => '${nama[0]}.').toList();
 
     return (namaTigaPertama + inisialSisa).join(' ');
+  }
+
+  static String formatEmail(String email) {
+    if (!email.contains('@')) return email;
+
+    String namaEmail = email.split('@')[0];
+    String hasil =
+        namaEmail.length > 10 ? '${namaEmail.substring(0, 10)}...' : namaEmail;
+
+    return '$hasil@gmail.com';
   }
 
   static String getErrorMessage(int statusCode) {

@@ -15,6 +15,7 @@ abstract class Routes {
   static const FOCUS_PRODUK = _Paths.FOCUS_PRODUK;
   static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
   static const EDIT_PROFIL = _Paths.EDIT_PROFIL;
+  static const PILIHAN_PERJALANAN = _Paths.PILIHAN_PERJALANAN;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const FOCUS_PRODUK = '/focus-produk';
   static const FORGOT_PASSWORD = '/forgot-password';
   static const EDIT_PROFIL = '/edit-profil';
+  static const PILIHAN_PERJALANAN = '/pilihan-perjalanan';
 }

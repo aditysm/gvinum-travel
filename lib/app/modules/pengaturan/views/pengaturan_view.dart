@@ -4,9 +4,8 @@ import 'package:gvinum_travel/all_material.dart';
 import 'package:gvinum_travel/app/modules/chat_room/views/chat_room_view.dart';
 import 'package:gvinum_travel/app/modules/edit_profil/views/edit_profil_view.dart';
 import 'package:gvinum_travel/app/modules/jadwal_manasik/views/jadwal_manasik_view.dart';
-import 'package:gvinum_travel/app/modules/list_rombongan/views/list_rombongan_view.dart';
 import 'package:gvinum_travel/app/modules/login_page/views/login_page_view.dart';
-import 'package:gvinum_travel/app/modules/perjalanan_saya/views/perjalanan_saya_view.dart';
+import 'package:gvinum_travel/app/modules/pilihan_perjalanan/views/pilihan_perjalanan_view.dart';
 
 import '../controllers/pengaturan_controller.dart';
 
@@ -50,7 +49,6 @@ class PengaturanView extends GetView<PengaturanController> {
                 onTap: () {
                   AllMaterial.messageScaffold(
                       title: "Fitur sedang digarap, coba lagi nanti!");
-                  // Get.to(() => const PerjalananSayaView());
                 },
                 svg: "assets/icon/password.svg",
               ),
@@ -58,7 +56,7 @@ class PengaturanView extends GetView<PengaturanController> {
               AllMaterial.settingWidget(
                 title: "Perjalanan Saya",
                 onTap: () {
-                  Get.to(() => const PerjalananSayaView(), arguments: {
+                  Get.to(() => const PilihanPerjalananView(), arguments: {
                     "isPerjalananSaya": true,
                   });
                 },
@@ -68,7 +66,9 @@ class PengaturanView extends GetView<PengaturanController> {
               AllMaterial.settingWidget(
                 title: "List Rombongan",
                 onTap: () {
-                  Get.to(() => const ListRombonganView());
+                  Get.to(() => const PilihanPerjalananView(), arguments: {
+                    "isPerjalananSaya": false,
+                  });
                 },
                 svg: "assets/icon/rombongan.svg",
               ),
@@ -84,7 +84,6 @@ class PengaturanView extends GetView<PengaturanController> {
               AllMaterial.settingWidget(
                 title: "Verifikasi Email",
                 onTap: () {
-                  // Get.to(() => const PerjalananSayaView());
                   AllMaterial.messageScaffold(
                       title: "Fitur sedang digarap, coba lagi nanti!");
                 },
