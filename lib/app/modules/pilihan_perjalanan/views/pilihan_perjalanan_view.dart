@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:get/get.dart';
 import 'package:gvinum_travel/all_material.dart';
 import 'package:gvinum_travel/app/data/api_url.dart';
@@ -79,7 +78,15 @@ class PilihanPerjalananView extends GetView<PilihanPerjalananController> {
                                       onTap: () {
                                         if (isPerjalananSaya) {
                                           Get.to(
-                                              () => const PerjalananSayaView());
+                                              () => const PerjalananSayaView(),
+                                              arguments: {
+                                                "idBooking": controller
+                                                        .dikonfirmasiList[
+                                                            dikonfirmasiIndex]
+                                                        .id ??
+                                                    0,
+                                                "statusPackage": "Dikonfirmasi",
+                                              });
                                         } else {
                                           Get.to(
                                               () => const ListRombonganView(),
@@ -96,13 +103,12 @@ class PilihanPerjalananView extends GetView<PilihanPerjalananController> {
                                                     ?.data?[dikonfirmasiIndex]
                                                     .package
                                                     ?.departureDate,
-                                                "idPackage": controller
+                                                "idBooking": controller
                                                         .perjalanan
                                                         .value
                                                         ?.data?[
                                                             dikonfirmasiIndex]
-                                                        .packagePrice
-                                                        ?.id ??
+                                                        .id ??
                                                     0
                                               });
                                         }
@@ -128,7 +134,7 @@ class PilihanPerjalananView extends GetView<PilihanPerjalananController> {
                                                 "localhost",
                                                 ApiUrl.baseUrl,
                                               ) ??
-                                              "https://picsum.photos/200/300?grayscale",
+                                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTkV-QyvVZLV8I351NbZVhCH4AlO69nhH9sA&s",
                                           errorBuilder:
                                               (context, error, stackTrace) {
                                             return SvgPicture.asset(
@@ -199,8 +205,15 @@ class PilihanPerjalananView extends GetView<PilihanPerjalananController> {
                                   return ListTile(
                                     onTap: () {
                                       if (isPerjalananSaya) {
-                                        Get.to(
-                                            () => const PerjalananSayaView());
+                                        Get.to(() => const PerjalananSayaView(),
+                                            arguments: {
+                                              "idBooking": controller
+                                                      .diprosesList[
+                                                          diprosesIndex]
+                                                      .id ??
+                                                  0,
+                                              "statusPackage": "Diproses"
+                                            });
                                       } else {
                                         Get.to(() => const ListRombonganView(),
                                             arguments: {
@@ -216,12 +229,11 @@ class PilihanPerjalananView extends GetView<PilihanPerjalananController> {
                                                   ?.data?[diprosesIndex]
                                                   .package
                                                   ?.departureDate,
-                                              "idPackage": controller
+                                              "idBooking": controller
                                                       .perjalanan
                                                       .value
                                                       ?.data?[diprosesIndex]
-                                                      .packagePrice
-                                                      ?.id ??
+                                                      .id ??
                                                   0
                                             });
                                       }
@@ -246,7 +258,7 @@ class PilihanPerjalananView extends GetView<PilihanPerjalananController> {
                                               "localhost",
                                               ApiUrl.baseUrl,
                                             ) ??
-                                            "https://picsum.photos/200/300?grayscale",
+                                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTkV-QyvVZLV8I351NbZVhCH4AlO69nhH9sA&s",
                                         errorBuilder:
                                             (context, error, stackTrace) {
                                           return SvgPicture.asset(
@@ -317,8 +329,15 @@ class PilihanPerjalananView extends GetView<PilihanPerjalananController> {
                                   return ListTile(
                                     onTap: () {
                                       if (isPerjalananSaya) {
-                                        Get.to(
-                                            () => const PerjalananSayaView());
+                                        Get.to(() => const PerjalananSayaView(),
+                                            arguments: {
+                                              "idBooking": controller
+                                                      .dibatalkanList[
+                                                          dibatalkanIndex]
+                                                      .id ??
+                                                  0,
+                                              "statusPackage": "Dibatalkan",
+                                            });
                                       } else {
                                         Get.to(
                                           () => const ListRombonganView(),
@@ -335,12 +354,11 @@ class PilihanPerjalananView extends GetView<PilihanPerjalananController> {
                                                 ?.data?[dibatalkanIndex]
                                                 .package
                                                 ?.departureDate,
-                                            "idPackage": controller
+                                            "idBooking": controller
                                                     .perjalanan
                                                     .value
                                                     ?.data?[dibatalkanIndex]
-                                                    .packagePrice
-                                                    ?.id ??
+                                                    .id ??
                                                 0
                                           },
                                         );
@@ -366,7 +384,7 @@ class PilihanPerjalananView extends GetView<PilihanPerjalananController> {
                                               "localhost",
                                               ApiUrl.baseUrl,
                                             ) ??
-                                            "https://picsum.photos/200/300?grayscale",
+                                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTkV-QyvVZLV8I351NbZVhCH4AlO69nhH9sA&s",
                                         errorBuilder:
                                             (context, error, stackTrace) {
                                           return SvgPicture.asset(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gvinum_travel/all_material.dart';
 import 'package:gvinum_travel/app/modules/focus_produk/views/focus_produk_view.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/pilih_paket_controller.dart';
 
@@ -110,14 +111,14 @@ class PilihPaketView extends GetView<PilihPaketController> {
                           padding: const EdgeInsets.only(right: 5),
                           child: AllMaterial.productItem(
                             hargaPaket:
-                                "${data?.package?.packagePrices?[0].price}",
+                                'Rp${NumberFormat('#,###', 'id_ID').format(data?.package?.packagePrices?[0].price)}',
                             img: "${data?.package?.image}",
                             jenisPaket: "${data?.package?.category}",
                             namaPaket: "${data?.package?.name}",
                             onTap: () {
-                              Get.to(
-                                () => const FocusProdukView(),
-                              );
+                              Get.to(() => const FocusProdukView(), arguments: {
+                                "idPackage": data?.package?.id ?? 0
+                              });
                             },
                             rating: "${data?.avgRating ?? "0.0"}",
                           ),

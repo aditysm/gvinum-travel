@@ -236,7 +236,7 @@ class ListRombonganView extends GetView<ListRombonganController> {
   Widget _buildBottomButton() {
     return Obx(
       () {
-        var user = controller.rombongan.value?.data?.user?.length;
+        var user = controller.rombongan.value?.data?.user?.length ?? 0;
         return AllMaterial.cusButton(
           label: "Cek Rombongan",
           onTap: user == 0

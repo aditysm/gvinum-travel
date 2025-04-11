@@ -13,6 +13,7 @@ import 'package:gvinum_travel/app/modules/notifikasi/views/notifikasi_view.dart'
 import 'package:gvinum_travel/app/modules/pengaturan/views/pengaturan_view.dart';
 import 'package:gvinum_travel/app/modules/pilih_paket/views/pilih_paket_view.dart';
 import 'package:gvinum_travel/app/modules/pilihan_perjalanan/views/pilihan_perjalanan_view.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -106,7 +107,7 @@ class HomeView extends GetView<HomeController> {
                             //             .profilWalas.value?.data?.fotoProfile
                             //             ?.replaceAll(
                             //                 "localhost", ApiUrl.baseUrl) ??
-                            //         "https://picsum.photos/200/300?grayscale",
+                            //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTkV-QyvVZLV8I351NbZVhCH4AlO69nhH9sA&s",
                             //   ),
                             // );
                           },
@@ -125,7 +126,7 @@ class HomeView extends GetView<HomeController> {
                                         "localhost",
                                         ApiUrl.baseUrl,
                                       ) ??
-                                      "https://picsum.photos/200/300?grayscale",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTkV-QyvVZLV8I351NbZVhCH4AlO69nhH9sA&s",
                                 ),
                               ),
                             ),
@@ -641,7 +642,7 @@ class HomeView extends GetView<HomeController> {
                                   padding: const EdgeInsets.only(right: 5),
                                   child: AllMaterial.productItem(
                                     hargaPaket:
-                                        "${data?.package?.packagePrices?[0].price}",
+                                    'Rp${NumberFormat('#,###', 'id_ID').format(data?.package?.packagePrices?[0].price)}',
                                     img: "${data?.package?.image}",
                                     jenisPaket: "${data?.package?.category}",
                                     namaPaket: "${data?.package?.name}",

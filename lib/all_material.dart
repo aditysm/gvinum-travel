@@ -536,7 +536,7 @@ abstract class AllMaterial {
                               "localhost",
                               ApiUrl.baseUrl,
                             ) ??
-                            "https://picsum.photos/200/300?grayscale",
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTkV-QyvVZLV8I351NbZVhCH4AlO69nhH9sA&s",
                         errorBuilder: (context, error, stackTrace) {
                           return SvgPicture.asset(
                             "assets/icon/kaaba.svg",
@@ -587,14 +587,14 @@ abstract class AllMaterial {
                         ),
                       ),
                       Text(
-                        "Paket $jenisPaket", // Tidak perlu "$jenisPaket"
+                        "Paket $jenisPaket",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style:
                             AllMaterial.inter(color: AllMaterial.colorGreyPrim),
                       ),
                       Text(
-                        "Rp. $hargaPaket", // Tidak perlu "$hargaPaket"
+                        "$hargaPaket",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AllMaterial.inter(

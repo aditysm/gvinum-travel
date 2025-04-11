@@ -6,6 +6,9 @@ abstract class ApiUrl {
   static var urlGetUser = "$url/user";
   static var urlGetUserBooking = "$url/user/booking";
   static var urlGetAllPackage = "$url/user/package";
+  static var urlGetPackageBookingById = "$url/user/booking";
+  static var urlGetBookingPrice = "$url/user/package/price/";
   static var urlGetUserPackageRombongan = "$url/user/package/rombongan";
+  static var urlGetPackageRating = "$url/user/package/rating";
   
 }
