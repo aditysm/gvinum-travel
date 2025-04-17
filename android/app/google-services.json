@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "520430100737",
+    "project_id": "gvinum-travel",
+    "storage_bucket": "gvinum-travel.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520430100737:android:45b2c80c5e5b9cb5e97b00",
+        "android_client_info": {
+          "package_name": "com.example.gvinum_travel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAci3EBCq8w3-ox3sm5J2dsn4nj6chu4BM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

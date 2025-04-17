@@ -1,0 +1,2 @@
+C:/Users/windows 11/adit/projek/gvinum_travel/android/app/.cxx/Debug/js6g1a1q/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/windows 11/adit/projek/gvinum_travel/android/app/.cxx/Debug/js6g1a1q/arm64-v8a/CMakeFiles/rebuild_cache.dir
