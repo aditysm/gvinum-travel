@@ -35,7 +35,8 @@ class ChatRoomView extends GetView<ChatRoomController> {
     controller.fetchChatMessages(controller.roomID.value);
     return Scaffold(
       backgroundColor: AllMaterial.colorWhite,
-      appBar: AppBar(
+      appBar:
+       AppBar(
         backgroundColor: AllMaterial.colorWhite,
         surfaceTintColor: AllMaterial.colorWhite,
         title: Text(

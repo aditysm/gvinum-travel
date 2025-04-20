@@ -8,6 +8,7 @@ import '../controllers/pilih_paket_controller.dart';
 
 class PilihPaketView extends GetView<PilihPaketController> {
   const PilihPaketView({super.key});
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(PilihPaketController());
@@ -19,6 +20,7 @@ class PilihPaketView extends GetView<PilihPaketController> {
         actions: [
           IconButton(
             onPressed: () {
+              // Menampilkan pesan scaffold saat filter digarap
               AllMaterial.messageScaffold(
                   title: "Fitur sedang digarap, coba lagi nanti!");
             },
@@ -26,62 +28,64 @@ class PilihPaketView extends GetView<PilihPaketController> {
           ),
         ],
         titleSpacing: 0,
-        title: Padding(
-          padding: const EdgeInsets.only(right: 15),
-          child: TextField(
-            selectionControls: MaterialTextSelectionControls(),
-            // controller: loginController.userC,
-            // focusNode: loginController.userF,
-            cursorColor: AllMaterial.colorBlack,
-            textInputAction: TextInputAction.done,
-            onTapOutside: (_) {
-              // loginController.userF.unfocus();
-            },
-            style: AllMaterial.inter(
+        title: TextField(
+          selectionControls: MaterialTextSelectionControls(),
+          controller: controller.searchC,
+          focusNode: controller.searchF,
+          cursorColor: AllMaterial.colorBlack,
+          textInputAction: TextInputAction.done,
+          onTapOutside: (_) {
+            controller.searchF.unfocus();
+          },
+          onSubmitted: (value) {
+            controller.applyFilter();
+          },
+          onChanged: (value) {
+            controller.applyFilter();
+          },
+          style: AllMaterial.inter(
+            color: AllMaterial.colorGreyPrim,
+          ),
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 6,
+            ),
+            hintText: "Telusuri Paket Umroh/Haji...",
+            hintStyle: AllMaterial.inter(
               color: AllMaterial.colorGreyPrim,
             ),
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 6,
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Colors.transparent,
+                width: 1,
               ),
-              hintText: "Telusuri Paket Umroh/Haji...",
-              hintStyle: AllMaterial.inter(
-                color: AllMaterial.colorGreyPrim,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            hoverColor: AllMaterial.colorStroke,
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                width: 1,
+                color: Colors.transparent,
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Colors.transparent,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              hoverColor: AllMaterial.colorStroke,
-              enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  width: 1,
-                  color: Colors.transparent,
-                ),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              focusColor: AllMaterial.colorStroke,
-              suffixIcon: Padding(
-                padding: const EdgeInsets.all(10),
-                child: IconButton(
-                  style: IconButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    backgroundColor: AllMaterial.colorPrimary,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            focusColor: AllMaterial.colorStroke,
+            suffixIcon: Padding(
+              padding: const EdgeInsets.all(10),
+              child: IconButton(
+                style: IconButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  onPressed: () {
-                    AllMaterial.messageScaffold(
-                        title: "Fitur sedang digarap, coba lagi nanti!");
-                  },
-                  icon: const Icon(
-                    Icons.search,
-                    color: AllMaterial.colorWhite,
-                  ),
+                  backgroundColor: AllMaterial.colorPrimary,
+                ),
+                onPressed: () {
+                  controller.applyFilter();
+                },
+                icon: const Icon(
+                  Icons.search,
+                  color: AllMaterial.colorWhite,
                 ),
               ),
             ),
@@ -94,18 +98,21 @@ class PilihPaketView extends GetView<PilihPaketController> {
           padding: const EdgeInsets.only(right: 22, left: 22, top: 20),
           child: Obx(
             () {
-              var paket = controller.package.value?.data?.length ?? 0;
+              var paket = controller.isFilterActive.value
+                  ? controller.filteredPackage.value?.data?.length ?? 0
+                  : controller.package.value?.data?.length ?? 0;
               if (paket > 0) {
-                print(paket);
                 return ListView(
                   children: [
                     Wrap(
-                      // spacing: Get.width / 20,
                       runAlignment: WrapAlignment.spaceAround,
                       runSpacing: 18,
                       alignment: WrapAlignment.center,
                       children: List.generate(paket, (index) {
-                        var data = controller.package.value?.data?[index];
+                        var data = controller.isFilterActive.value
+                            ? controller.filteredPackage.value?.data![index]
+                            : controller.package.value?.data?[index];
+
                         return Padding(
                           padding: const EdgeInsets.only(right: 5),
                           child: AllMaterial.productItem(
@@ -129,7 +136,12 @@ class PilihPaketView extends GetView<PilihPaketController> {
                   ],
                 );
               } else {
-                return const SizedBox.shrink();
+                return Center(
+                  child: Text(
+                    "Tidak ada paket yang tersedia",
+                    style: AllMaterial.inter(),
+                  ),
+                );
               }
             },
           ),

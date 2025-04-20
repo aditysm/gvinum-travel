@@ -66,7 +66,9 @@ class NotifikasiView extends GetView<NotifikasiController> {
                           dibaca: notif.reads?.isNotEmpty ?? false,
                           bawah: notif.body,
                           onTap: () {
-                            controller.postReadChat(notif.id);
+                            if (notif.reads == null || notif.reads!.isEmpty) {
+                              controller.postReadChat(notif.id);
+                            }
                             AllMaterial.detilKonten(
                               title: notif.title,
                               subtitle: notif.body,

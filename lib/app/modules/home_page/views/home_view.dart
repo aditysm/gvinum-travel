@@ -10,6 +10,7 @@ import 'package:gvinum_travel/app/modules/focus_produk/views/focus_produk_view.d
 import 'package:gvinum_travel/app/modules/jadwal_manasik/views/jadwal_manasik_view.dart';
 import 'package:gvinum_travel/app/modules/notifikasi/views/notifikasi_view.dart';
 import 'package:gvinum_travel/app/modules/pengaturan/views/pengaturan_view.dart';
+import 'package:gvinum_travel/app/modules/pilih_paket/controllers/pilih_paket_controller.dart';
 import 'package:gvinum_travel/app/modules/pilih_paket/views/pilih_paket_view.dart';
 import 'package:gvinum_travel/app/modules/pilihan_perjalanan/views/pilihan_perjalanan_view.dart';
 import 'package:badges/badges.dart' as badges;
@@ -430,6 +431,10 @@ class HomeView extends GetView<HomeController> {
                       onTap: () {
                         print("object");
                         Get.to(() => const PilihPaketView());
+                        final paket = Get.put(PilihPaketController());
+                        Future.delayed(Duration.zero, () {
+                          paket.searchF.requestFocus();
+                        });
                       },
                       selectionControls: MaterialTextSelectionControls(),
                       // controller: loginController.userC,
@@ -489,6 +494,10 @@ class HomeView extends GetView<HomeController> {
                             onPressed: () {
                               print("object");
                               Get.to(() => const PilihPaketView());
+                              final paket = Get.put(PilihPaketController());
+                              Future.delayed(Duration.zero, () {
+                                paket.searchF.requestFocus();
+                              });
                             },
                             icon: const Icon(
                               Icons.search,
@@ -763,7 +772,7 @@ class HomeView extends GetView<HomeController> {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: "Hubungi Admin",
-        elevation: 1,
+        elevation: 3,
         backgroundColor: AllMaterial.colorPrimary,
         onPressed: () {
           Get.to(() => const ChatListView());

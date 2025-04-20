@@ -5,6 +5,7 @@ import 'package:gvinum_travel/all_material.dart';
 import 'package:gvinum_travel/app/data/api_url.dart';
 import 'package:gvinum_travel/app/model/detail_package_booking_model.dart';
 import 'package:gvinum_travel/app/model/package_rating_model.dart';
+import 'package:gvinum_travel/app/modules/home_page/controllers/home_controller.dart';
 import 'package:gvinum_travel/app/modules/pilihan_perjalanan/controllers/pilihan_perjalanan_controller.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,6 +16,7 @@ class PerjalananSayaController extends GetxController {
   var package = Rx<DetailPackageBookingModel?>(null);
   var rating = Rx<PackageRatingModel?>(null);
   var status = "".obs;
+  final homeC = Get.put(HomeController());
   var idBooking = 0.obs;
   var pilCont = Get.put(PilihanPerjalananController());
 
@@ -46,6 +48,7 @@ class PerjalananSayaController extends GetxController {
         var responseData = DetailPackageBookingModel.fromJson(data);
         package.value = responseData;
         fetchPackageRating(id);
+        homeC.fetchNotifCount();
         print(data);
       } else {
         print(data);

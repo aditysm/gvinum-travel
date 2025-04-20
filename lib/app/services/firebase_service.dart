@@ -1,4 +1,6 @@
+
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:gvinum_travel/all_material.dart';
 
 void setupFirebaseMessaging() {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -7,6 +9,7 @@ void setupFirebaseMessaging() {
 
   messaging.getToken().then((token) {
     print("FCM Token: $token");
+      AllMaterial.box.write("fcmToken", token);
   });
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -17,3 +20,5 @@ void setupFirebaseMessaging() {
     print('Aplikasi dibuka dari notifikasi: ${message.messageId}');
   });
 }
+
+

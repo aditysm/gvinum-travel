@@ -54,6 +54,15 @@ class PengaturanView extends GetView<PengaturanController> {
               ),
               const SizedBox(height: 16),
               AllMaterial.settingWidget(
+                title: "Verifikasi Email",
+                onTap: () {
+                  AllMaterial.messageScaffold(
+                      title: "Fitur sedang digarap, coba lagi nanti!");
+                },
+                svg: "assets/icon/email.svg",
+              ),
+              const SizedBox(height: 16),
+              AllMaterial.settingWidget(
                 title: "Perjalanan Saya",
                 onTap: () {
                   Get.to(() => const PilihanPerjalananView(), arguments: {
@@ -79,15 +88,6 @@ class PengaturanView extends GetView<PengaturanController> {
                   Get.to(() => const JadwalManasikView());
                 },
                 svg: "assets/icon/manasik.svg",
-              ),
-              const SizedBox(height: 16),
-              AllMaterial.settingWidget(
-                title: "Verifikasi Email",
-                onTap: () {
-                  AllMaterial.messageScaffold(
-                      title: "Fitur sedang digarap, coba lagi nanti!");
-                },
-                svg: "assets/icon/email.svg",
               ),
               const SizedBox(height: 16),
               AllMaterial.settingWidget(

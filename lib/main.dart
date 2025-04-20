@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gvinum_travel/all_material.dart';
-import 'package:gvinum_travel/app/modules/home/views/home_view.dart';
+import 'package:gvinum_travel/app/modules/home_page/views/home_view.dart';
 import 'package:gvinum_travel/app/modules/login_page/controllers/login_page_controller.dart';
 import 'package:gvinum_travel/app/modules/login_page/views/login_page_view.dart';
 import 'package:gvinum_travel/app/services/firebase_service.dart';
+import 'package:gvinum_travel/app/services/notification_service.dart';
 import 'package:gvinum_travel/app/services/socket_service.dart';
 import 'package:gvinum_travel/app/widgets/splash_screen/cusplash_screen_view.dart';
 import 'package:gvinum_travel/firebase_options.dart';
@@ -21,8 +22,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  setupFirebaseMessaging();
   SocketService.init();
+  final pushService = PushNotificationService();
+  await pushService.init();
+  setupFirebaseMessaging();
+  pushService.listenToSocketNotification();
   runApp(
     const MyApp(),
   );

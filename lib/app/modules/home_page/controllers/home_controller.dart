@@ -90,10 +90,39 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<void> postFcmToken() async {
+    var token = AllMaterial.box.read("token");
+    var fcmToken = AllMaterial.box.read("fcmToken");
+    try {
+      final response = await http.put(
+        Uri.parse(ApiUrl.urlPutProfileUser),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+        body: jsonEncode({
+          "fcm_token": fcmToken.toString(),
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        AllMaterial.box.write("udahFcm", true);
+        print(response.body);
+      } else {
+        print(response.body);
+      }
+    } catch (e) {
+      print("Terjadi kesalahan: $e");
+    }
+  }
+
   @override
   void onInit() {
     loginC.passC.text = "";
     loginC.userC.text = "";
+    if (AllMaterial.box.read("udahFcm") == null) {
+      postFcmToken();
+    }
     fetchDataUser();
     fetchNotifCount();
     fetchDataPackage();

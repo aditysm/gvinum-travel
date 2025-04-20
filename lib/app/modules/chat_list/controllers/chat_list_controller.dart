@@ -12,7 +12,59 @@ class ChatListController extends GetxController {
   var chat = Rx<AllChatListModel?>(null);
   var chatList = [].obs;
 
-   Future<void> fetchChatListAdmin() async {
+  RxSet<int> selectedRoomIds = <int>{}.obs;
+  RxBool isSelectionMode = false.obs;
+
+  void toggleSelection(int roomId) {
+    if (selectedRoomIds.contains(roomId)) {
+      selectedRoomIds.remove(roomId);
+    } else {
+      selectedRoomIds.add(roomId);
+    }
+    if (selectedRoomIds.isEmpty) {
+      isSelectionMode.value = false;
+    } else {
+      isSelectionMode.value = true;
+    }
+  }
+
+  void clearSelection() {
+    selectedRoomIds.clear();
+    isSelectionMode.value = false;
+  }
+
+  Future<void> deleteSelectedRooms() async {
+    final idsToDelete = selectedRoomIds.toList();
+    print("Delete chat dijalankan untuk ID: $idsToDelete");
+
+    try {
+      for (var id in idsToDelete) {
+        final response = await http.delete(
+          Uri.parse("${ApiUrl.urlDeleteChatAdmin}$id"),
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        );
+
+        if (response.statusCode == 200) {
+          print("Room $id berhasil dihapus");
+        } else {
+          print("Gagal hapus room $id: ${response.body}");
+        }
+      }
+      chat.value?.data
+          ?.removeWhere((item) => idsToDelete.contains(item.roomId));
+      chat.refresh();
+      fetchChatListAdmin();
+      clearSelection();
+      update();
+    } catch (e) {
+      print("Error saat menghapus: $e");
+    }
+  }
+
+  Future<void> fetchChatListAdmin() async {
     print("fetch chat list dijalankan...");
     try {
       final response = await http.get(
@@ -38,7 +90,7 @@ class ChatListController extends GetxController {
   }
 
   static void refreshChat() {
-   var fi = Get.put(ChatListController());
+    var fi = Get.put(ChatListController());
     fi.fetchChatListAdmin();
   }
 

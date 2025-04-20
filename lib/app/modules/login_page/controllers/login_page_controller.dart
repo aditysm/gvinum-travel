@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gvinum_travel/app/data/api_url.dart';
-import 'package:gvinum_travel/app/modules/home/controllers/home_controller.dart';
-import 'package:gvinum_travel/app/modules/home/views/home_view.dart';
+import 'package:gvinum_travel/app/modules/home_page/controllers/home_controller.dart';
+import 'package:gvinum_travel/app/modules/home_page/views/home_view.dart';
 import 'package:http/http.dart' as http;
 import 'package:gvinum_travel/all_material.dart';
 

@@ -25,6 +25,7 @@ class GeneralController extends GetxController {
         Get.offAll(() => const LoginPageView());
         AllMaterial.box.erase();
         AllMaterial.box.remove("token");
+        AllMaterial.box.remove("udahFcm");
         if (isExpired == true) {
           AllMaterial.messageScaffold(
             title: "Sesi berakhir, silahkan login kembali",

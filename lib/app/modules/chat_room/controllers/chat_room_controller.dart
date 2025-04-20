@@ -139,7 +139,7 @@ class ChatRoomController extends GetxController {
 
       if (data['room_id'] == roomID.value) {
         messages.add(data);
-        // scrollToBottom();
+        scrollToBottom();
       }
     });
 

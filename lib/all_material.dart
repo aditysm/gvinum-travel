@@ -431,6 +431,7 @@ abstract class AllMaterial {
     String? hintText,
     bool readOnly = false,
     void Function()? onTap,
+    void Function()? onEdit,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -443,7 +444,7 @@ abstract class AllMaterial {
               style: AllMaterial.inter(
                 fontWeight: AllMaterial.fontMedium,
                 fontSize: 14,
-                color: AllMaterial.colorGreySec,
+                color: AllMaterial.colorBlack,
               ),
             ),
             addRowButton == true
@@ -467,6 +468,7 @@ abstract class AllMaterial {
         ),
         const SizedBox(height: 6),
         TextField(
+          onChanged: (value) => onEdit,
           readOnly: readOnly,
           controller: controller,
           focusNode: focusNode,
@@ -477,7 +479,9 @@ abstract class AllMaterial {
             focusNode!.unfocus();
           },
           style: AllMaterial.inter(
-            color: AllMaterial.colorGreySec,
+            color: (readOnly)
+                ? AllMaterial.colorGreySec
+                : AllMaterial.colorGreyPrim,
           ),
           decoration: InputDecoration(
             disabledBorder: OutlineInputBorder(

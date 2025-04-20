@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:gvinum_travel/all_material.dart';
 import 'package:gvinum_travel/app/data/api_url.dart';
 import 'package:gvinum_travel/app/model/all_notification_model.dart';
-import 'package:gvinum_travel/app/modules/home/controllers/home_controller.dart';
+import 'package:gvinum_travel/app/modules/home_page/controllers/home_controller.dart';
 
 import 'package:http/http.dart' as http;
 

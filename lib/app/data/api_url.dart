@@ -4,6 +4,7 @@ abstract class ApiUrl {
   static var urlPostLogin = "$url/auth/user/login";
   static var urlPostLogout = "$url/auth/logout";
   static var urlGetUser = "$url/user/";
+  static var urlPutProfileUser = "$url/user/profile";
   static var urlGetUserBooking = "$url/user/booking";
   static var urlGetAllPackage = "$url/user/package";
   static var urlGetPackageBookingById = "$url/user/booking";
@@ -16,7 +17,6 @@ abstract class ApiUrl {
   static var urlPostPackageeMessage = "$url/chat/start_chat";
   static var urlGetChatList = "$url/chat/room";
   static var urlGetReadChatAdmin = "$url/chat/message/read/";
+  static var urlDeleteChatAdmin = "$url/chat/room";
   
 }
-
-// pas dapat messagenya tinggal dipush aja dilist message nbarunya, atau kalau mau gampang fecth ulang dia getAllMessagenya. tapi lebih baik push message ke list.

@@ -6,7 +6,7 @@ import 'package:gvinum_travel/app/data/api_url.dart';
 import 'package:gvinum_travel/app/model/detail_package_model.dart';
 import 'package:gvinum_travel/app/model/package_booking_price_model.dart';
 import 'package:gvinum_travel/app/model/package_rating_model.dart';
-import 'package:gvinum_travel/app/modules/home/views/home_view.dart';
+import 'package:gvinum_travel/app/modules/home_page/views/home_view.dart';
 import 'package:http/http.dart' as http;
 
 class FocusProdukController extends GetxController {
@@ -76,6 +76,7 @@ class FocusProdukController extends GetxController {
       var data = jsonDecode(response.body);
       if (response.statusCode == 200) {
         postNewMessageToAdmin();
+        
         AllMaterial.messageScaffold(
           title:
               "Pesanan berhasil diproses, silahkan hubungi admin untuk melanjutkan pembayaran!",
