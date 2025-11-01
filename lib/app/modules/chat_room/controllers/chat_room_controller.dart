@@ -133,7 +133,6 @@ class ChatRoomController extends GetxController {
     fetchChatMessages(roomID.value);
     scrollController.addListener(handleScroll);
 
-    // Tambah listener dari socket
     SocketService.socket?.on('new_message', (data) {
       print("new_message dari socket: $data");
 
